@@ -1,9 +1,12 @@
+var inputFileType
 function modal_view() {
 	if (document.querySelector("#selectStandardFileLocation")) {
 		var selectStandardFileLocation = document.querySelector("#selectStandardFileLocation")
+		inputFileType = "standard"
 		document.body.removeChild(selectStandardFileLocation)
 	} else if (document.querySelector("#selectCompareFileLocation")) {
 		var selectCompareFileLocation = document.querySelector("#selectCompareFileLocation")
+		inputFileType = "compare"
 		document.body.removeChild(selectCompareFileLocation)
 	}
 	const DB_html =
@@ -97,14 +100,16 @@ function modal_view() {
                 <div class="result-div">
 	               <table class = "result-style">
 	                  <thead>
-		                  <th class="result-style_th" style="width: 4%; background-color: lightgray">No.</th>
-		                  <th class="result-style_th" style="width: 24%; background-color: lightgray">파일명</th>
-		                  <th class="result-style_th" style="width: 9%; background-color: lightgray">확장자</th>
-		                  <th class="result-style_th" style="width: 12%; background-color: lightgray">모델명</th>
-		                  <th class="result-style_th" style="width: 12%; background-color: lightgray">모델 넘버</th>
-		                  <th class="result-style_th" style="width: 12%; background-color: lightgray">os 정보</th>
-		                  <th class="result-style_th" style="width: 12%; background-color: lightgray">녹음 모드</th>
-		                  <th class="result-style_th" style="width: 13%; background-color: lightgray">편집 정보</th>
+	                  	  <tr>
+		                  	  <th class="result-style_th" style="width: 4%; background-color: lightgray">No.</th>
+			                  <th class="result-style_th" style="width: 24%; background-color: lightgray">파일명</th>
+			                  <th class="result-style_th" style="width: 9%; background-color: lightgray">확장자</th>
+			                  <th class="result-style_th" style="width: 12%; background-color: lightgray">모델명</th>
+			                  <th class="result-style_th" style="width: 12%; background-color: lightgray">모델 넘버</th>
+			                  <th class="result-style_th" style="width: 12%; background-color: lightgray">os 정보</th>
+			                  <th class="result-style_th" style="width: 12%; background-color: lightgray">녹음 모드</th>
+			                  <th class="result-style_th" style="width: 13%; background-color: lightgray">편집 정보</th>
+	                  	  </tr>
 		              </thead>
 		              <tbody>
 		              </tbody>
@@ -159,4 +164,44 @@ function modal_view() {
 			}
 		})
 	})
+}
+
+var beSelectedFileForStandard = []
+var beSelectedFileForCompare = []
+function beSelectedFile(row){
+	var td = row.children()
+	switch(row.attr('class')){
+		case "beSelected":
+			row.css("background-color", "white")
+			row.removeClass('beSelected')
+			switch(inputFileType){
+				case "standard":
+					var index = beSelectedFileForStandard.indexOf(td[1].innerHTML)
+					beSelectedFileForStandard.splice(index,1)
+					break
+				case "compare":
+					var index = beSelectedFileForCompare.indexOf(td[1].innerHTML)
+					beSelectedFileForCompare.splice(index,1)
+					break
+			}
+			break
+		default:
+			switch (inputFileType) {
+				case "standard":
+					if (beSelectedFileForStandard.length < 1) {
+						row.css("background-color", "orange")
+						row.addClass('beSelected')
+						beSelectedFileForStandard.push(td[1].innerHTML)
+					} else {
+						alert("기준 파일은 최대 1개 까지 첨부 가능합니다.")
+					}
+					break
+				case "compare":
+					row.css("background-color", "orange")
+					row.addClass('beSelected')
+					beSelectedFileForCompare.push(td[1].innerHTML)
+					break
+			}
+			break
+	}
 }
