@@ -90,7 +90,8 @@
 						<td style="width: 10%">No.</td>
 						<td style="width: 30%">파일명</td>
 						<td style="width: 20%">파일 크기</td>
-						<td style="width: 40%">수정한 날짜</td>
+						<td style="width: 20%">파일 확장자</td>
+						<td style="width: 20%">파일 위치</td>
 					</tr>
 				</thead>
 				<tbody id="filelisttable_body">
@@ -98,19 +99,22 @@
 						<td style="width: 10%" class="detailline">Standard file</td>
 						<td style="width: 30%" class="standard_name"></td>
 						<td style="width: 20%" class="standard_size"></td>
-						<td style="width: 40%" class="standard_date"></td>
+						<td style="width: 20%" class="standard_fileType"></td>
+						<td style="width: 20%" class="standard_location"></td>
 					</tr>
 					<tr class="removetr">
 						<td style="width: 10%; height: 25px"></td>
 						<td style="width: 30%"></td>
 						<td style="width: 20%"></td>
-						<td style="width: 40%"></td>
+						<td style="width: 20%"></td>
+						<td style="width: 20%"></td>
 					</tr>
 					<tr class="removetr">
 						<td style="width: 10%; height: 25px"></td>
 						<td style="width: 30%"></td>
 						<td style="width: 20%"></td>
-						<td style="width: 40%"></td>
+						<td style="width: 20%"></td>
+						<td style="width: 20%"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -121,7 +125,8 @@
          $(".stbtn").click(function() {
             $(".standard_name").empty();
             $(".standard_size").empty();
-            $(".standard_date").empty();
+            $(".standard_fileType").empty();
+            $(".standard_location").empty();
             $("#standardfile").empty();
             $("#standardfile").val("");
             $('.line').val("");

@@ -116,7 +116,7 @@ function modal_view() {
 	               </table>
 	            </div>
 	            <div>
-	            	<button>선택 완료</button>
+	            	<button onclick='submit()'>선택 완료</button>
 	            </div>	            
          	</div>
       </div>`
@@ -176,12 +176,14 @@ function beSelectedFile(row){
 			row.removeClass('beSelected')
 			switch(inputFileType){
 				case "standard":
-					var index = beSelectedFileForStandard.indexOf(td[1].innerHTML)
-					beSelectedFileForStandard.splice(index,1)
+					beSelectedFile = []
 					break
 				case "compare":
-					var index = beSelectedFileForCompare.indexOf(td[1].innerHTML)
-					beSelectedFileForCompare.splice(index,1)
+					for (var i = 0; i < beSelectedFileForCompare.length; i++) {
+						if (beSelectedFileForCompare[i].fileName == td[1].innerHTML) {
+							beSelectedFileForCompare.splice(i, 1)
+						}
+					}
 					break
 			}
 			break
@@ -191,7 +193,13 @@ function beSelectedFile(row){
 					if (beSelectedFileForStandard.length < 1) {
 						row.css("background-color", "orange")
 						row.addClass('beSelected')
-						beSelectedFileForStandard.push(td[1].innerHTML)
+						var fileSet = {
+							fileName : td[1].innerHTML,
+							fileSize : "None",
+							fileType : td[2].innerHTML,
+							fileLocation : "DB"
+						}
+						beSelectedFileForStandard.push(fileSet)
 					} else {
 						alert("기준 파일은 최대 1개 까지 첨부 가능합니다.")
 					}
@@ -199,9 +207,30 @@ function beSelectedFile(row){
 				case "compare":
 					row.css("background-color", "orange")
 					row.addClass('beSelected')
-					beSelectedFileForCompare.push(td[1].innerHTML)
+					row.addClass('beSelected')
+					var fileSet = {
+						fileName: td[1].innerHTML,
+						fileSize: "None",
+						fileType: td[2].innerHTML,
+						fileLocation: "DB"
+					}
+					beSelectedFileForCompare.push(fileSet)
 					break
 			}
+			break
+	}
+}
+
+function submit(){
+	const selectFileDatabase = document.querySelector("#selectFileDatabase")
+	document.body.removeChild(selectFileDatabase)
+	switch (inputFileType) {
+		//fileManage.js에서 standard_addFile(), compare_addFile() 호출
+		case "standard":
+			standard_addFile("DB", beSelectedFileForStandard)
+			break
+		case "compare":
+			compare_addFile("DB", beSelectedFileForCompare)
 			break
 	}
 }
