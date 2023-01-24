@@ -21,7 +21,13 @@ function getFileListFromDB(query) {
 
 
 function makeFileListFromDB(data){
-	var index = 1;
+	var result_length = $(".result-style_th").length;
+	if(result_length == 8){
+		var index = 1;
+	}
+	else{
+		var index = result_length + 1 - 8;
+	}
 	for(key in data){
 		var exportdata = Object.entries(data[key])
 		var fileInfoFromDB = "<tr>"
@@ -37,5 +43,4 @@ function makeFileListFromDB(data){
 		$('table.result-style tbody').append(fileInfoFromDB)
 		index++;
 	}
-	
 }

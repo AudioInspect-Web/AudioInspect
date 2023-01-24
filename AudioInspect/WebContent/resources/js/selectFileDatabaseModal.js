@@ -22,7 +22,7 @@ function modal_view() {
 	                  <li class="menu"><i class="fa-duotone fa-play"></i><a>디바이스 제조사 설정</a>
 	                     <ul class="hide">
 	                        <li class = "select-text">검색할 제조사를 선택해주세요.</li>
-	                        <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "manuAll" checked = "on">전체보기</li>
+	                        <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "manuAll">전체보기</li>
 	                        <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Samsung" id = "nonck">Samsung</li>
 	                        <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "LG" id = "nonck">LG</li>
 	                        <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Apple" id = "nonck">Apple</li>
@@ -85,7 +85,7 @@ function modal_view() {
 	                  </li>
 	                  <li class="menu"><i class="fa-duotone fa-play"></i><a>녹음 모드 선택</a>
 	                     <ul class="hide">
-	                        <li class = "select-list"><input class ="checklist" type="checkbox">전체 보기</li>
+	                        <li class = "select-list"><input class ="checklist" type="checkbox" class = "recordlist" name = "recordAll">전체 보기</li>
 	                        <hr>
 	                        <li class = "select-list">녹음 모드</li>
 	                        <li class = "select-list">녹음 퀄리티</li>
@@ -155,7 +155,7 @@ function modal_view() {
 			});
 			for (var i = 0; i < resultarr.length; i++) {
 				if (resultarr[i] == "manuAll") {
-					$("input[id = 'nonck']").attr("checked", false);
+					//$("input[id = 'nonck']").attr("checked", true);
 					getFileListFromDB(initQueryForOriginal)
 					getFileListFromDB(initQueryForEdited)
 				} else {
@@ -214,6 +214,19 @@ function modal_view() {
 					getFileListFromDB(selectOS)
 					getFileListFromDB(selectOS2)
 				}
+			}
+		})
+		$(".recordlist").click(function() {
+			$(".result_list").empty();
+			const query = 'input[class="recordlist"]:checked';
+			const selectedEls = document.querySelectorAll(query);
+			let result = '';
+			selectedEls.forEach((el) => {
+				result = el.name + '';
+			});
+			if (result == "recordAll") {
+				getFileListFromDB(initQueryForOriginal)
+				getFileListFromDB(initQueryForEdited)
 			}
 		})
 		//체크박스 체크 초기화
