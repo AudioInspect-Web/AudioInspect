@@ -31,11 +31,16 @@ function exportReportToXML() {
 			var arr3 = [];
 			var arr4 = [];
 			for (var i = 0; i < resultline.length; i++) {
+				attribute = $(".compareresult")[i].innerHTML;
+				attribute2 = attribute.substr(0, attribute.indexOf("<br>"));
 				attribute_name = $(".compareresult")[i].firstChild.data;
 				attribute_name_1 = attribute_name.substr(0, attribute_name.indexOf("]"));
 				attribute_name_1 = attribute_name_1.replace("[", "").replace(" ", "");
-				attribute_name_2 = attribute_name.substr(attribute_name.indexOf("]"));
-				attribute_name_2 = attribute_name_2.replace("]", "").replace(" ", "");
+				//attribute_name_2 = attribute.substr(0, attribute.indexOf("<br>"));
+				attribute_name_2 = attribute2.substr(attribute2.indexOf("]"));
+				attribute_name_2 = attribute_name_2.replace("]", "")
+				attribute_name_2 = attribute_name_2.replaceAll("<b>", "").replaceAll("</b>", "");
+				console.log(attribute_name_2)
 
 				var standardfile_value = $(".compareresult")[i].childNodes[2].data;
 				var comparefile_value = $(".compareresult")[i].lastChild.data;
