@@ -34,24 +34,24 @@ function modal_view() {
 	                     <ul class="hide">
 	                        <li class = "select-text">표시할 파일의 원본/편집 여부를 선택해주세요.</li>
 	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "editAll">전체 파일 보기</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "original">원본 파일만 보기</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "edit">편집 파일만 보기</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "original" id = 'editnonck'>원본 파일만 보기</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "edit" id = 'editnonck'>편집 파일만 보기</li>
 	                        <hr>
 	                        <li class = "select-text">편집 소프트웨어 설정</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "edit">전체 보기</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "BuiltinSW">자체 탑제 소프트웨어 편집 본</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "editAll">전체 보기</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "BuiltinSW" id = 'sweditnonck'>자체 탑제 소프트웨어 편집 본</li>
 	                        <li class = "select-text">PC 기반 소프트웨어</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Gold wave">Gold wave</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Wave pad">Wave pad</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Audacity">Audacity</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Gold wave" id = 'sweditnonck'>Gold wave</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Wave pad" id = 'sweditnonck'>Wave pad</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Audacity" id = 'sweditnonck'>Audacity</li>
 	                        <li class = "select-text">안드로이드 기반 소프트웨어</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "302 lock screen">302 lock screen</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist"name = "inshot inc.">inshot inc.</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Recorder & smart apps">Recorder & smart apps</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "302 lock screen" id = 'sweditnonck'>302 lock screen</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "inshot inc." id = 'sweditnonck'>inshot inc.</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Recorder & smart apps" id = 'sweditnonck'>Recorder & smart apps</li>
 	                        <li class = "select-text">iOS 기반 소프트웨어</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Garageband">Garageband</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Lexis Audio Editor">Lexis Audio Editor</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Wave pad mobile">Wave pad mobile</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Garageband" id = 'sweditnonck'>Garageband</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Lexis Audio Editor" id = 'sweditnonck'>Lexis Audio Editor</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Wave pad mobile" id = 'sweditnonck'>Wave pad mobile</li>
 	                     </ul>
 	                  </li>
 	                  <li class="menu"><i class="fa-duotone fa-play"></i><a>검색 키워드 설정</a>
@@ -59,13 +59,13 @@ function modal_view() {
 	                        <li class = "select-text">검색 키워드와 검색 옵션을 선택해주세요.</li>
 	                        <hr>
 	                        <li class = "select-text">검색 키워드</li>
-	                        <li class = "select-list"><input type="text" class="search" placeholder="검색 키워드를 입력해주세요."></li>
+	                        <li class = "select-list"><input type="text" class="search_text" placeholder="검색 키워드를 입력해주세요."></li>
 	                        <li class = "select-list"><input type="button" class = "search_button" value="검색 키워드 적용"></li>
 	                        <hr>
 	                        <li class = "select-text">검색 옵션</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "editAll">전체 파일 보기</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "original">원본 파일만 보기</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "edit">편집 파일만 보기</li>
+	                        <li class = "select-list"><input type="checkbox" class ="text_search" name = "file_name" checked = "on">파일 이름으로 검색</li>
+	                        <li class = "select-list"><input type="checkbox" class ="text_search" name = "record_device">녹음 모델명으로 검색</li>
+	                        <li class = "select-list"><input type="checkbox" class ="text_search" name = "record_device_num">녹음 모델 넘버로 검색</li>
 	                     </ul>
 	                  </li>
 	                  <li class="menu"><i class="fa-duotone fa-play"></i><a>OS 설정</a>
@@ -73,8 +73,8 @@ function modal_view() {
 	                        <li class = "select-text">OS 종류</li>
 	                        <li class = "select-text">디바이스 제조사 선택 시 OS 종류는 자동으로 선택됩니다.</li>
 	                        <li class = "select-list"><input type="checkbox" class ="OSlist" name = "OSAll">전체 보기</li>
-	                        <li class = "select-list"><input type="checkbox" class ="OSlist" name = "Android">Android</li>
-	                        <li class = "select-list"><input type="checkbox" class ="OSlist" name = "iOS">iOS</li>
+	                        <li class = "select-list"><input type="checkbox" class ="OSlist" name = "Android" id = "OSnonck">Android</li>
+	                        <li class = "select-list"><input type="checkbox" class ="OSlist" name = "iOS" id = "OSnonck">iOS</li>
 	                        <hr>
 	                        <li class = "select-text">OS 버전</li>
 	                        <li class = "select-text">현재 검색 결과에 나타나는 버전만 출력됩니다.</li>
@@ -85,7 +85,7 @@ function modal_view() {
 	                  </li>
 	                  <li class="menu"><i class="fa-duotone fa-play"></i><a>녹음 모드 선택</a>
 	                     <ul class="hide">
-	                        <li class = "select-list"><input class ="checklist" type="checkbox" class = "recordlist" name = "recordAll">전체 보기</li>
+	                        <li class = "select-list"><input type="checkbox" class = "recordlist" name = "recordAll">전체 보기</li>
 	                        <hr>
 	                        <li class = "select-list">녹음 모드</li>
 	                        <li class = "select-list">녹음 퀄리티</li>
@@ -144,8 +144,7 @@ function modal_view() {
 			$(".result_list").empty();
 			// 선택된 목록 가져오기
 			const query = 'input[class="manufacturerlist"]:checked';
-			const selectedEls =
-				document.querySelectorAll(query);
+			const selectedEls = document.querySelectorAll(query);
 			// 선택된 목록에서 value 찾기
 			let result = "";
 			var resultarr = [];
@@ -155,13 +154,13 @@ function modal_view() {
 			});
 			for (var i = 0; i < resultarr.length; i++) {
 				if (resultarr[i] == "manuAll") {
-					//$("input[id = 'nonck']").attr("checked", true);
+					$("input[id = 'nonck']").attr("checked", false);
 					getFileListFromDB(initQueryForOriginal)
 					getFileListFromDB(initQueryForEdited)
 				} else {
 					$("input[name = 'manuAll']").attr("checked", false);
 					var selectmanufacturer = initQueryForOriginal + " and sf.recording_app_manufacturer='" + resultarr[i] + "'";
-					var selectmanufacturer2 = initQueryForEdited + " and esf.recording_app_manufacturer='" + resultarr[i] + "'";
+					var selectmanufacturer2 = initQueryForEdited + " and esf.editing_app_manufacturer='" + resultarr[i] + "'";
 					getFileListFromDB(selectmanufacturer)
 					getFileListFromDB(selectmanufacturer2)
 				}
@@ -180,14 +179,19 @@ function modal_view() {
 			});
 			for (var i = 0; i < resultarr.length; i++) {
 				if (resultarr[i] == "editAll") {
+					$("input[id = 'editnonck']").attr("checked", false);
+					$("input[id = 'sweditnonck']").attr("checked", false);
 					getFileListFromDB(initQueryForOriginal)
 					getFileListFromDB(initQueryForEdited)
 				} if (resultarr[i] == "original") {
+					$("input[name='editAll']").attr("checked", false);
 					getFileListFromDB(initQueryForOriginal)
 				} if (resultarr[i] == "edit") {
+					$("input[name='editAll']").attr("checked", false);
 					getFileListFromDB(initQueryForEdited)
 				}
 				else {
+					$("input[name='editAll']").attr("checked", false);
 					var selectEdit = initQueryForEdited + " and esf.editing_app_name='" + resultarr[i] + "'";
 					getFileListFromDB(selectEdit)
 				}
@@ -206,15 +210,95 @@ function modal_view() {
 			});
 			for (var i = 0; i < resultarr.length; i++) {
 				if (resultarr[i] == "OSAll") {
+					$("input[id='OSnonck']").attr("checked", false);
 					getFileListFromDB(initQueryForOriginal)
 					getFileListFromDB(initQueryForEdited)
 				} else {
+					$("input[name='OSAll']").attr("checked", false);
 					var selectOS = initQueryForEdited + " and osd.os_name='" + resultarr[i] + "'";
 					var selectOS2 = initQueryForEdited + " and osd.os_name='" + resultarr[i] + "'";
 					getFileListFromDB(selectOS)
 					getFileListFromDB(selectOS2)
 				}
 			}
+		})
+		$(".searchlist").click(function() {
+			$(".result_list").empty();
+			const query = 'input[class="searchlist"]:checked';
+			const selectedEls = document.querySelectorAll(query);
+			let result = '';
+			var resultarr = [];
+			selectedEls.forEach((el) => {
+				result = el.name + '';
+				resultarr.push(result);
+			});
+			for (var i = 0; i < resultarr.length; i++) {
+				if (resultarr[i] == "searchAll") {
+					$("input[id='searchnonck']").attr("checked", false);
+					getFileListFromDB(initQueryForOriginal)
+					getFileListFromDB(initQueryForEdited)
+				}
+				if (resultarr[i] == "original") {
+					$("input[name='searchAll']").attr("checked", false);
+					getFileListFromDB(initQueryForOriginal)
+				}
+				if (resultarr[i] == "edit") {
+					$("input[name='searchAll']").attr("checked", false);
+					getFileListFromDB(initQueryForEdited)
+				}
+			}
+		})
+		$(".text_search").click(function() {
+			const query = 'input[class="text_search"]:checked';
+			const selectedEls = document.querySelectorAll(query);
+			let result = '';
+			var resultarr = [];
+			selectedEls.forEach((el) => {
+				result = el.name + '';
+				resultarr.push(result);
+			});
+			for (var i = 0; i < resultarr.length; i++) {
+				if (resultarr[i] == "file_name") {
+					$("input[name='record_device']").attr("checked", false);
+					$("input[name='record_device_num']").attr("checked", false);
+					$(".search_button").click(function() {
+						$(".result_list").empty();
+						var search = $(".search_text").val();
+						var search_text = initQueryForOriginal + " and sf.file_name like'%" + search + "%'";
+						var search_text2 = initQueryForEdited + " and esf.file_name like'%" + search + "%'";
+						getFileListFromDB(search_text)
+						getFileListFromDB(search_text2)
+
+					})
+				}
+				if (resultarr[i] == "record_device") {
+					$("input[name='file_name']").attr("checked", false);
+					$("input[name='record_device_num']").attr("checked", false);
+					$(".search_button").click(function() {
+						$(".result_list").empty();
+						var search = $(".search_text").val();
+						var search_text = initQueryForOriginal + " and sd.smart_device_model_name like'%" + search + "%'";
+						var search_text2 = initQueryForEdited + " and sd.smart_device_model_name like'%" + search + "%'";
+						getFileListFromDB(search_text)
+						getFileListFromDB(search_text2)
+
+					})
+				}
+				if (resultarr[i] == "record_device_num") {
+					$("input[name='file_name']").attr("checked", false);
+					$("input[name='record_device']").attr("checked", false);
+					$(".search_button").click(function() {
+						$(".result_list").empty();
+						var search = $(".search_text").val();
+						var search_text = initQueryForOriginal + " and sd.smart_device_model_number like'%" + search + "%'";
+						var search_text2 = initQueryForEdited + " and sd.smart_device_model_number like'%" + search + "%'";
+						getFileListFromDB(search_text)
+						getFileListFromDB(search_text2)
+
+					})
+				}
+			}
+
 		})
 		$(".recordlist").click(function() {
 			$(".result_list").empty();
@@ -233,18 +317,22 @@ function modal_view() {
 		$(".selectdelete").click(function() {
 			$(".result_list").empty();
 			// 초기화할 checkbox 선택
-			const checkboxes = $(".manufacturerlist");
-			const checkboxes2 = $(".OSlist");
-			const checkboxes3 = $(".editlist");
+			const checkbox = $(".manufacturerlist");
+			const checkbox2 = $(".OSlist");
+			const checkbox3 = $(".editlist");
+			const checkbox4 = $(".text_search")
 			// 체크박스 목록을 순회하며 checked 값을 초기화
-			for (var i = 0; i < checkboxes.length; i++) {
-				checkboxes[i].checked = false;
+			for (var i = 0; i < checkbox.length; i++) {
+				checkbox[i].checked = false;
 			}
-			for (var i = 0; i < checkboxes2.length; i++) {
-				checkboxes2[i].checked = false;
+			for (var i = 0; i < checkbox2.length; i++) {
+				checkbox2[i].checked = false;
 			}
-			for (var i = 0; i < checkboxes3.length; i++) {
-				checkboxes3[i].checked = false;
+			for (var i = 0; i < checkbox3.length; i++) {
+				checkbox3[i].checked = false;
+			}
+			for(var i = 0; i < checkbox4.length; i++){
+				checkbox4[i].checked = false;
 			}
 			getFileListFromDB(initQueryForOriginal)
 			getFileListFromDB(initQueryForEdited)
