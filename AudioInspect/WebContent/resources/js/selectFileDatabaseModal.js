@@ -38,20 +38,20 @@ function modal_view() {
 	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "edit" id = 'editnonck'>편집 파일만 보기</li>
 	                        <hr>
 	                        <li class = "select-text">편집 소프트웨어 설정</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "editAll">전체 보기</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "BuiltinSW" id = 'sweditnonck'>자체 탑제 소프트웨어 편집 본</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "editAll2">전체 보기</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "BuiltinSW" id = 'sweditnonck'>자체 탑제 소프트웨어 편집 본</li>
 	                        <li class = "select-text">PC 기반 소프트웨어</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Gold wave" id = 'sweditnonck'>Gold wave</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Wave pad" id = 'sweditnonck'>Wave pad</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Audacity" id = 'sweditnonck'>Audacity</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Gold wave" id = 'sweditnonck'>Gold wave</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Wave pad" id = 'sweditnonck'>Wave pad</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Audacity" id = 'sweditnonck'>Audacity</li>
 	                        <li class = "select-text">안드로이드 기반 소프트웨어</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "302 lock screen" id = 'sweditnonck'>302 lock screen</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "inshot inc." id = 'sweditnonck'>inshot inc.</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Recorder & smart apps" id = 'sweditnonck'>Recorder & smart apps</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "302 lock screen" id = 'sweditnonck'>302 lock screen</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "inshot inc." id = 'sweditnonck'>inshot inc.</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Recorder & smart apps" id = 'sweditnonck'>Recorder & smart apps</li>
 	                        <li class = "select-text">iOS 기반 소프트웨어</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Garageband" id = 'sweditnonck'>Garageband</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Lexis Audio Editor" id = 'sweditnonck'>Lexis Audio Editor</li>
-	                        <li class = "select-list"><input type="checkbox" class ="editlist" name = "Wave pad mobile" id = 'sweditnonck'>Wave pad mobile</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Garageband" id = 'sweditnonck'>Garageband</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Lexis Audio Editor" id = 'sweditnonck'>Lexis Audio Editor</li>
+	                        <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Wave pad mobile" id = 'sweditnonck'>Wave pad mobile</li>
 	                     </ul>
 	                  </li>
 	                  <li class="menu"><i class="fa-duotone fa-play"></i><a>검색 키워드 설정</a>
@@ -154,19 +154,24 @@ function modal_view() {
 			});
 			for (var i = 0; i < resultarr.length; i++) {
 				if (resultarr[i] == "manuAll") {
-					$("input[id = 'nonck']").attr("checked", false);
 					getFileListFromDB(initQueryForOriginal)
 					getFileListFromDB(initQueryForEdited)
+					$("input[id = 'nonck']").attr("checked", false);
 				} else {
-					$("input[name = 'manuAll']").attr("checked", false);
+					if (resultarr[i] == "manuAll") {
+						resultarr.splice(0)
+					}
 					var selectmanufacturer = initQueryForOriginal + " and sf.recording_app_manufacturer='" + resultarr[i] + "'";
 					var selectmanufacturer2 = initQueryForEdited + " and esf.editing_app_manufacturer='" + resultarr[i] + "'";
 					getFileListFromDB(selectmanufacturer)
 					getFileListFromDB(selectmanufacturer2)
+					$("input[name = 'manuAll']").attr("checked", false);
 				}
 			}
 		})
 		$(".editlist").click(function() {
+			$("input[name='editAll2']").attr("checked", false);
+			$("input[id = 'sweditnonck']").attr("checked", false);
 			$(".result_list").empty();
 			const query = 'input[class="editlist"]:checked';
 			const selectedEls =
@@ -180,7 +185,6 @@ function modal_view() {
 			for (var i = 0; i < resultarr.length; i++) {
 				if (resultarr[i] == "editAll") {
 					$("input[id = 'editnonck']").attr("checked", false);
-					$("input[id = 'sweditnonck']").attr("checked", false);
 					getFileListFromDB(initQueryForOriginal)
 					getFileListFromDB(initQueryForEdited)
 				} if (resultarr[i] == "original") {
@@ -191,7 +195,35 @@ function modal_view() {
 					getFileListFromDB(initQueryForEdited)
 				}
 				else {
-					$("input[name='editAll']").attr("checked", false);
+					$(".result_list").empty();
+					//$("input[id = 'editnonck']").attr("checked", false);
+					//$("input[name='editAll']").attr("checked", false);
+					var selectEdit = initQueryForEdited + " and esf.editing_app_name='" + resultarr[i] + "'";
+					getFileListFromDB(selectEdit)
+				}
+			}
+		})
+		$(".editlist2").click(function() {
+			$("input[name='editAll']").attr("checked", false);
+			$("input[id = 'editnonck']").attr("checked", false);
+			$(".result_list").empty();
+			const query = 'input[class="editlist2"]:checked';
+			const selectedEls =
+				document.querySelectorAll(query);
+			let result = '';
+			var resultarr = [];
+			selectedEls.forEach((el) => {
+				result = el.name + '';
+				resultarr.push(result);
+			});
+			for (var i = 0; i < resultarr.length; i++) {
+				if (resultarr[i] == "editAll2") {
+					$("input[id = 'sweditnonck']").attr("checked", false);
+					getFileListFromDB(initQueryForEdited)
+				} 
+				else {
+					$(".result_list").empty();
+					$("input[name='editAll2']").attr("checked", false);
 					var selectEdit = initQueryForEdited + " and esf.editing_app_name='" + resultarr[i] + "'";
 					getFileListFromDB(selectEdit)
 				}
@@ -332,7 +364,12 @@ function modal_view() {
 				checkbox3[i].checked = false;
 			}
 			for (var i = 0; i < checkbox4.length; i++) {
-				checkbox4[i].checked = false;
+				if (checkbox4[i].name == "file_name") {
+					$("input[name='file_name']").attr("checked", true);
+				}
+				else {
+					checkbox4[i].checked = false;
+				}
 			}
 			getFileListFromDB(initQueryForOriginal)
 			getFileListFromDB(initQueryForEdited)
