@@ -331,7 +331,7 @@ function modal_view() {
 			for (var i = 0; i < checkbox3.length; i++) {
 				checkbox3[i].checked = false;
 			}
-			for(var i = 0; i < checkbox4.length; i++){
+			for (var i = 0; i < checkbox4.length; i++) {
 				checkbox4[i].checked = false;
 			}
 			getFileListFromDB(initQueryForOriginal)
@@ -339,6 +339,11 @@ function modal_view() {
 		});
 		// menu 클래스 바로 하위에 있는 a 태그를 클릭했을때
 		$(".menu>a").click(function() {
+			if ($(".hide").is(":visible")) {
+				$(".hide").slideUp()
+				var removeIcon = $(".menu>i")
+				removeIcon.removeClass("fa-solid fa-chevron-down").addClass("fa-duotone fa-play")
+			}
 			var submenu = $(this).next("ul")
 			var clickIcon = $(this).prev("i")
 			if (submenu.is(":visible")) {
