@@ -81,6 +81,8 @@
 	<script src="resources/js/selectFileLocationModal.js"></script>
 	<script src="resources/js/selectFileDatabaseModal.js"></script>
 	<script src="resources/js/getFileListFromDB.js"></script>
+	<script src="resources/js/getOptionFileListFromDB.js"></script>
+	
 	
 
 	<div>

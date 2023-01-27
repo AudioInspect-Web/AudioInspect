@@ -134,245 +134,36 @@ function modal_view() {
 	var initQueryForEdited = "select esf.file_name, esf.editing_app_name, esf.recording_mode, esf.recording_quality, esf.file_type, sd.smart_device_model_name, sd.smart_device_model_number, osd.os_name, osd.os_version\n"
 		+ "from edited_speech_file esf, recording_editing_device red, smart_device sd, os_for_smart_devices osd\n"
 		+ "where esf.editing_device_id=red.recording_editing_device_id and red.smart_device_id = sd.smart_device_id and red.os_id = osd.os_id"
-
+	
 	// html dom 이 다 로딩된 후 실행된다.
 	$(document).ready(function() {
 		getFileListFromDB(initQueryForOriginal)
 		getFileListFromDB(initQueryForEdited)
 		//체크박스 확인
 		$(".manufacturerlist").click(function() {
-			$(".result_list").empty();
-			// 선택된 목록 가져오기
-			const query = 'input[class="manufacturerlist"]:checked';
-			const selectedEls = document.querySelectorAll(query);
-			// 선택된 목록에서 value 찾기
-			let result = "";
-			var resultarr = [];
-			selectedEls.forEach((el) => {
-				result = el.name + '';
-				resultarr.push(result);
-			});
-			for (var i = 0; i < resultarr.length; i++) {
-				if (resultarr[i] == "manuAll") {
-					getFileListFromDB(initQueryForOriginal)
-					getFileListFromDB(initQueryForEdited)
-					$("input[id = 'nonck']").attr("checked", false);
-				} else {
-					if (resultarr[i] == "manuAll") {
-						resultarr.splice(0)
-					}
-					var selectmanufacturer = initQueryForOriginal + " and sf.recording_app_manufacturer='" + resultarr[i] + "'";
-					var selectmanufacturer2 = initQueryForEdited + " and esf.editing_app_manufacturer='" + resultarr[i] + "'";
-					getFileListFromDB(selectmanufacturer)
-					getFileListFromDB(selectmanufacturer2)
-					$("input[name = 'manuAll']").attr("checked", false);
-				}
-			}
+			manuclick()
 		})
 		$(".editlist").click(function() {
-			$("input[name='editAll2']").attr("checked", false);
-			$("input[id = 'sweditnonck']").attr("checked", false);
-			$(".result_list").empty();
-			const query = 'input[class="editlist"]:checked';
-			const selectedEls =
-				document.querySelectorAll(query);
-			let result = '';
-			var resultarr = [];
-			selectedEls.forEach((el) => {
-				result = el.name + '';
-				resultarr.push(result);
-			});
-			for (var i = 0; i < resultarr.length; i++) {
-				if (resultarr[i] == "editAll") {
-					$("input[id = 'editnonck']").attr("checked", false);
-					getFileListFromDB(initQueryForOriginal)
-					getFileListFromDB(initQueryForEdited)
-				} if (resultarr[i] == "original") {
-					$("input[name='editAll']").attr("checked", false);
-					getFileListFromDB(initQueryForOriginal)
-				} if (resultarr[i] == "edit") {
-					$("input[name='editAll']").attr("checked", false);
-					getFileListFromDB(initQueryForEdited)
-				}
-				else {
-					$(".result_list").empty();
-					//$("input[id = 'editnonck']").attr("checked", false);
-					//$("input[name='editAll']").attr("checked", false);
-					var selectEdit = initQueryForEdited + " and esf.editing_app_name='" + resultarr[i] + "'";
-					getFileListFromDB(selectEdit)
-				}
-			}
+			editclick()
 		})
 		$(".editlist2").click(function() {
-			$("input[name='editAll']").attr("checked", false);
-			$("input[id = 'editnonck']").attr("checked", false);
-			$(".result_list").empty();
-			const query = 'input[class="editlist2"]:checked';
-			const selectedEls =
-				document.querySelectorAll(query);
-			let result = '';
-			var resultarr = [];
-			selectedEls.forEach((el) => {
-				result = el.name + '';
-				resultarr.push(result);
-			});
-			for (var i = 0; i < resultarr.length; i++) {
-				if (resultarr[i] == "editAll2") {
-					$("input[id = 'sweditnonck']").attr("checked", false);
-					getFileListFromDB(initQueryForEdited)
-				} 
-				else {
-					$(".result_list").empty();
-					$("input[name='editAll2']").attr("checked", false);
-					var selectEdit = initQueryForEdited + " and esf.editing_app_name='" + resultarr[i] + "'";
-					getFileListFromDB(selectEdit)
-				}
-			}
+			editclick2()
 		})
 		$(".OSlist").click(function() {
-			$(".result_list").empty();
-			const query = 'input[class="OSlist"]:checked';
-			const selectedEls =
-				document.querySelectorAll(query);
-			let result = '';
-			var resultarr = [];
-			selectedEls.forEach((el) => {
-				result = el.name + '';
-				resultarr.push(result);
-			});
-			for (var i = 0; i < resultarr.length; i++) {
-				if (resultarr[i] == "OSAll") {
-					$("input[id='OSnonck']").attr("checked", false);
-					getFileListFromDB(initQueryForOriginal)
-					getFileListFromDB(initQueryForEdited)
-				} else {
-					$("input[name='OSAll']").attr("checked", false);
-					var selectOS = initQueryForEdited + " and osd.os_name='" + resultarr[i] + "'";
-					var selectOS2 = initQueryForEdited + " and osd.os_name='" + resultarr[i] + "'";
-					getFileListFromDB(selectOS)
-					getFileListFromDB(selectOS2)
-				}
-			}
+			OSclick()
 		})
 		$(".searchlist").click(function() {
-			$(".result_list").empty();
-			const query = 'input[class="searchlist"]:checked';
-			const selectedEls = document.querySelectorAll(query);
-			let result = '';
-			var resultarr = [];
-			selectedEls.forEach((el) => {
-				result = el.name + '';
-				resultarr.push(result);
-			});
-			for (var i = 0; i < resultarr.length; i++) {
-				if (resultarr[i] == "searchAll") {
-					$("input[id='searchnonck']").attr("checked", false);
-					getFileListFromDB(initQueryForOriginal)
-					getFileListFromDB(initQueryForEdited)
-				}
-				if (resultarr[i] == "original") {
-					$("input[name='searchAll']").attr("checked", false);
-					getFileListFromDB(initQueryForOriginal)
-				}
-				if (resultarr[i] == "edit") {
-					$("input[name='searchAll']").attr("checked", false);
-					getFileListFromDB(initQueryForEdited)
-				}
-			}
+			searchclick()
 		})
 		$(".text_search").click(function() {
-			const query = 'input[class="text_search"]:checked';
-			const selectedEls = document.querySelectorAll(query);
-			let result = '';
-			var resultarr = [];
-			selectedEls.forEach((el) => {
-				result = el.name + '';
-				resultarr.push(result);
-			});
-			for (var i = 0; i < resultarr.length; i++) {
-				if (resultarr[i] == "file_name") {
-					$("input[name='record_device']").attr("checked", false);
-					$("input[name='record_device_num']").attr("checked", false);
-					$(".search_button").click(function() {
-						$(".result_list").empty();
-						var search = $(".search_text").val();
-						var search_text = initQueryForOriginal + " and sf.file_name like'%" + search + "%'";
-						var search_text2 = initQueryForEdited + " and esf.file_name like'%" + search + "%'";
-						getFileListFromDB(search_text)
-						getFileListFromDB(search_text2)
-
-					})
-				}
-				if (resultarr[i] == "record_device") {
-					$("input[name='file_name']").attr("checked", false);
-					$("input[name='record_device_num']").attr("checked", false);
-					$(".search_button").click(function() {
-						$(".result_list").empty();
-						var search = $(".search_text").val();
-						var search_text = initQueryForOriginal + " and sd.smart_device_model_name like'%" + search + "%'";
-						var search_text2 = initQueryForEdited + " and sd.smart_device_model_name like'%" + search + "%'";
-						getFileListFromDB(search_text)
-						getFileListFromDB(search_text2)
-
-					})
-				}
-				if (resultarr[i] == "record_device_num") {
-					$("input[name='file_name']").attr("checked", false);
-					$("input[name='record_device']").attr("checked", false);
-					$(".search_button").click(function() {
-						$(".result_list").empty();
-						var search = $(".search_text").val();
-						var search_text = initQueryForOriginal + " and sd.smart_device_model_number like'%" + search + "%'";
-						var search_text2 = initQueryForEdited + " and sd.smart_device_model_number like'%" + search + "%'";
-						getFileListFromDB(search_text)
-						getFileListFromDB(search_text2)
-
-					})
-				}
-			}
-
+			textclick()
 		})
 		$(".recordlist").click(function() {
-			$(".result_list").empty();
-			const query = 'input[class="recordlist"]:checked';
-			const selectedEls = document.querySelectorAll(query);
-			let result = '';
-			selectedEls.forEach((el) => {
-				result = el.name + '';
-			});
-			if (result == "recordAll") {
-				getFileListFromDB(initQueryForOriginal)
-				getFileListFromDB(initQueryForEdited)
-			}
+			recordclick()
 		})
 		//체크박스 체크 초기화
 		$(".selectdelete").click(function() {
-			$(".result_list").empty();
-			// 초기화할 checkbox 선택
-			const checkbox = $(".manufacturerlist");
-			const checkbox2 = $(".OSlist");
-			const checkbox3 = $(".editlist");
-			const checkbox4 = $(".text_search")
-			// 체크박스 목록을 순회하며 checked 값을 초기화
-			for (var i = 0; i < checkbox.length; i++) {
-				checkbox[i].checked = false;
-			}
-			for (var i = 0; i < checkbox2.length; i++) {
-				checkbox2[i].checked = false;
-			}
-			for (var i = 0; i < checkbox3.length; i++) {
-				checkbox3[i].checked = false;
-			}
-			for (var i = 0; i < checkbox4.length; i++) {
-				if (checkbox4[i].name == "file_name") {
-					$("input[name='file_name']").attr("checked", true);
-				}
-				else {
-					checkbox4[i].checked = false;
-				}
-			}
-			getFileListFromDB(initQueryForOriginal)
-			getFileListFromDB(initQueryForEdited)
+			deleteclick()
 		});
 		// menu 클래스 바로 하위에 있는 a 태그를 클릭했을때
 		$(".menu>a").click(function() {
