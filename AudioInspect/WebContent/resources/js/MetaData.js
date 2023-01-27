@@ -65,6 +65,27 @@ function CompMetaData(file) {
 	})
 }
 
+function MetaDataFromDB(selectedFileId) {
+	$.ajax({
+		method: "POST",
+		url: '/metaDataFromDBServlet; charset=utf-8',
+		dataType: 'text',
+		data: {
+			fileId: selectedFileId
+		},
+		complete: function() {
+			console.log("성공")
+		},
+		error: function(request, status, error) {
+			console.log(request.responseText);
+			console.log(status.responseText);
+			console.log(error.responseText);
+			alert("ajax 에러 발생");
+			return;
+		}
+	})
+}
+
 function getStandMetaDataTreeFromXML(xml) {
 	var standardfile = document.getElementById('standardfile')
 	var comparemethod = document.querySelector(".compare_button.current").value

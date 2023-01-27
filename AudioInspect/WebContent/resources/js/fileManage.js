@@ -30,8 +30,6 @@ function standard_addFile(files) {
 			}
 		}
 	}
-	// 초기화
-	document.querySelector("input[type=file]").value = ""
 }
 
 function standard_deleteFile() {
