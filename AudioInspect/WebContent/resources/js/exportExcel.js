@@ -22,6 +22,7 @@ function exportReportToExcel_XML() {
 	var arr = [];
 	var summary = $("#summary")[0].innerText;
 	var total = $(".compareresult");
+	console.log(total)
 
 	var attribute_name = ""
 	var standardfile_value_2 = ""
@@ -39,14 +40,17 @@ function exportReportToExcel_XML() {
 	}
 	for (var i = 0; i < total.length; i++) {
 		attribute_name = $(".compareresult")[i].firstChild.data;
-		standardfile_value = $(".compareresult")[i].childNodes[2].data;
-		comparefile_value = $(".compareresult")[i].lastChild.data;
-
+		attribute = $(".compareresult")[i].innerHTML;
+		attribute2 = attribute.substr(attribute.indexOf("<br>"));
+		attribute2 = attribute2.replace("<br", "");
+		standardfile_value = attribute2.substr(0, attribute2.indexOf('<i class="fa-sharp fa-solid fa-not-equal"></i>'));
+		comparefile_value = attribute2.substr(attribute2.indexOf('<i class="fa-sharp fa-solid fa-not-equal"></i>'));
 		standardfile_value = standardfile_value.replace("(", "");
 		attribute_name_1 = attribute_name.substr(0, attribute_name.indexOf("]"));
 		attribute_name_1 = attribute_name_1.replace("[", "");
-		attribute_name_2 = attribute_name.substr(attribute_name.indexOf("]"));
-		attribute_name_2 = attribute_name_2.replace("] ", "");
+		attribute_name_2 = attribute.substr(0, attribute.indexOf("<br>"));
+		attribute_name_2 = attribute_name_2.substr(attribute_name_2.indexOf("]"));
+		attribute_name_2 = attribute_name_2.replaceAll("<b>", "").replaceAll("</b>", "")
 
 		if (standardfile_value.includes("::")) {
 			var standardfile_name = standardfile_value.substr(0, standardfile_value.indexOf("::"));
@@ -149,6 +153,7 @@ function exportReportToExcel_TEXT() {
 
 	var summary = $("#summary")[0].innerText
 	var total = $(".compareresult");
+	console.log(total)
 
 	var attribute_name = ""
 	var attribute_value = ""
@@ -171,15 +176,12 @@ function exportReportToExcel_TEXT() {
 	else {
 		for (var i = 0; i < total.length; i++) {
 			attribute_name = $(".compareresult")[i].firstChild.data;
-			attribute_value = $(".compareresult")[i].lastChild.data;
-			attribute_value_1 = attribute_value.substr(0, attribute_value.indexOf("|"));
-			attribute_value_1 = attribute_value_1.replace("(", "");
+			attribute_value_1 = $(".compareresult")[i].childNodes[2].data;
+			attribute_value_2 = $(".compareresult")[i].lastChild.data;
 			attribute_name_1 = attribute_name.substr(0, attribute_name.indexOf("]"));
 			attribute_name_1 = attribute_name_1.replace("[", "");
 			attribute_name_2 = attribute_name.substr(attribute_name.indexOf("]"));
 			attribute_name_2 = attribute_name_2.replace("] ", "");
-			attribute_value_2 = attribute_value.substr(attribute_value.indexOf("|"));
-			attribute_value_2 = attribute_value_2.replace("|", "").replace("(", "");
 			if (attribute_value_1.includes("::")) {
 				standardfile_value_2 = attribute_value_1.substr(attribute_value_1.indexOf("::"));
 				standardfile_value_2 = standardfile_value_2.replace(":: ", "");
@@ -335,15 +337,12 @@ function exportReportToExcel_TREE() {
 	}
 	for (var i = 0; i < total.length; i++) {
 		attribute_name = $(".compareresult")[i].firstChild.data;
-		attribute_value = $(".compareresult")[i].lastChild.data;
-		attribute_value_1 = attribute_value.substr(0, attribute_value.indexOf("|"));
-		attribute_value_1 = attribute_value_1.replace("(", "");
+		attribute_value_1 = $(".compareresult")[i].childNodes[2].data;
+		attribute_value_2 = $(".compareresult")[i].lastChild.data;
 		attribute_name_1 = attribute_name.substr(0, attribute_name.indexOf("]"));
 		attribute_name_1 = attribute_name_1.replace("[", "");
 		attribute_name_2 = attribute_name.substr(attribute_name.indexOf("]"));
 		attribute_name_2 = attribute_name_2.replace("] ", "");
-		attribute_value_2 = attribute_value.substr(attribute_value.indexOf("|"));
-		attribute_value_2 = attribute_value_2.replace("|", "").replace("(", "");
 		if (attribute_value_1.includes("::")) {
 			standardfile_value_2 = attribute_value_1.substr(attribute_value_1.indexOf("::"));
 			standardfile_value_2 = standardfile_value_2.replace(":: ", "");

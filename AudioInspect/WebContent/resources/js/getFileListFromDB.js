@@ -24,8 +24,9 @@ function makeFileListFromDB(data){
 	var index = 1;
 	for(key in data){
 		var exportdata = Object.entries(data[key])
-		var fileInfoFromDB = "<tr>"
-		fileInfoFromDB += "<td class='result-style_th'>" + index + "</td>"
+		//selectFileDatabaseModal.js에서 beSelectedFile() 호출
+		var fileInfoFromDB = "<tr onclick = 'beSelectedFile($(this))'>"
+		fileInfoFromDB += "<td class='result-style_td'>" + index + "</td>"
 		fileInfoFromDB += "<td class='result-style_td'>" + key + "</td>"
 		fileInfoFromDB += "<td class='result-style_td'>" + exportdata[0][1] + "</td>"
 		fileInfoFromDB += "<td class='result-style_td'>" + exportdata[1][1] + "</td>"

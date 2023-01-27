@@ -39,6 +39,7 @@ function compare(tab_id, standardfile, comparefile, comparefile_name) {
 	var difference_index_comparefile = []
 	var track_info_standardfile = [] //기준 파일의 트랙 정보(General, Audio) 속성 인덱스 저장
 	var track_info_comparefile = []
+	var notEqualIcon = '<i class="fa-sharp fa-solid fa-not-equal"></i>'
 
 	//standard 파일과 이전에 선택한 compare 파일과의 비교 결과를 삭제
 	$(".resultline").empty()
@@ -61,7 +62,7 @@ function compare(tab_id, standardfile, comparefile, comparefile_name) {
 					//이제는 ':' 뒤의 내용을 비교하는데 이때 두 내용이 다른 경우
 					if (standardfileArr[i].substring(slash + 1) != comparefileArr[j].substring(compare_slash + 1)) {
 						let resultline = ''
-						resultline = '<tr><td class = "compareresult">[DATA_VALUE_MISMATCHING] ' + search_standard_name + '<br>(' + standardfile_name + ') :: ' + standardfileArr[i].substring(slash + 1) + " | (" + comparefile_name + ") :: " + comparefileArr[j].substring(compare_slash + 1) + '</td></tr>'
+						resultline = '<tr><td class = "compareresult">[DATA_VALUE_MISMATCHING] ' + search_standard_name + '<br>(' + standardfile_name + ') :: ' + standardfileArr[i].substring(slash + 1) + ' ' + notEqualIcon + " (" + comparefile_name + ") :: " + comparefileArr[j].substring(compare_slash + 1) + '</td></tr>'
 						$('.resultline').append(resultline)
 						standardfileArr[i] = ""
 						comparefileArr[j] = "" //comparefileArr[j]의 내용을 공백으로 바꿈: General과 Audio에 같은 속성이 존재하기 때문
@@ -97,7 +98,7 @@ function compare(tab_id, standardfile, comparefile, comparefile_name) {
 				var slash = standardfileArr[i].indexOf(':')
 				var dataName = standardfileArr[i].substring(0, slash)
 				let resultline_2 = ''
-				resultline_2 = '<tr><td class = "compareresult">[DATA_MISSING] ' + dataName + '<br>(' + standardfile_name + ') 존재 O | (' + comparefile_name + ') 존재 X</td></tr>'
+				resultline_2 = '<tr><td class = "compareresult">[DATA_MISSING] ' + dataName + '<br>(' + standardfile_name + ') 존재 O ' + notEqualIcon + ' (' + comparefile_name + ') 존재 X</td></tr>'
 				$('.resultline_2').append(resultline_2)
 				difference_index_standardfile.push(i) //standardfile과 comparefile의 차이점의 인덱스를 저장
 			}
@@ -118,7 +119,7 @@ function compare(tab_id, standardfile, comparefile, comparefile_name) {
 				var slash = comparefileArr[j].indexOf(':')
 				var dataName = comparefileArr[j].substring(0, slash)
 				let resultline_2 = ''
-				resultline_2 = '<tr><td class = "compareresult">[DATA_MISSING] ' + dataName + '<br>(' + standardfile_name + ') 존재 X | (' + comparefile_name + ') 존재 O</td></tr>'
+				resultline_2 = '<tr><td class = "compareresult">[DATA_MISSING] ' + dataName + '<br>(' + standardfile_name + ') 존재 X ' + notEqualIcon + ' (' + comparefile_name + ') 존재 O</td></tr>'
 				$('.resultline_2').append(resultline_2)
 				difference_index_comparefile.push(j)
 			}
@@ -575,9 +576,9 @@ function BLOCK_MISSING(fileA, fileA_name, fileA_type, fileB, fileB_name, notEqua
 			}
 			let resultline = ''
 			if (fileA_type == "standard") {
-				resultline = '<tr><td class = "compareresult">[BLOCK_MISSING]' + printBlockList.replaceAll(">", "&#10097") + '<br> (' + fileA_name + ') 존재 O ' + notEqualIcon + ' (' + fileB_name + ') 존재 X</td></tr>'
+				resultline = '<tr><td class = "compareresult">[BLOCK_MISSING] ' + printBlockList.replaceAll(">", "<b> &#5171; </b>") + '<br> (' + fileA_name + ') 존재 O ' + notEqualIcon + ' (' + fileB_name + ') 존재 X</td></tr>'
 			} else {
-				resultline = '<tr><td class = "compareresult">[BLOCK_MISSING]' + printBlockList.replaceAll(">", "&#10097") + '<br> (' + fileB_name + ') 존재 X ' + notEqualIcon + ' (' + fileA_name + ') 존재 O</td></tr>'
+				resultline = '<tr><td class = "compareresult">[BLOCK_MISSING] ' + printBlockList.replaceAll(">", "<b> &#5171; </b>") + '<br> (' + fileB_name + ') 존재 X ' + notEqualIcon + ' (' + fileA_name + ') 존재 O</td></tr>'
 			}
 			$('.resultline').append(resultline)
 			//BLOCK_MISSING "초록색"으로 표기
@@ -633,7 +634,7 @@ function BLOCK_LOCATION_MISMATCHING(key, data_info_standardfile, data_info_compa
 					let resultline = ''
 					var posStandard = x + 1
 					var posCompare = commonCompareBlock.indexOf(commonStandardBlock[x]) + 1
-					resultline = '<tr><td class = "compareresult">[BLOCK_LOCATION_MISMATCHING]' + commonStandardBlock[x].replaceAll(">", "&#10097") + '<br>(' + standardfile_name + ') ' + posStandard + '번째 ' + notEqualIcon + ' (' + comparefile_name + ') ' + posCompare + '번째</td></tr>'
+					resultline = '<tr><td class = "compareresult">[BLOCK_LOCATION_MISMATCHING] ' + commonStandardBlock[x].replaceAll(">", "<b> &#5171; </b>") + '<br>(' + standardfile_name + ') ' + posStandard + '번째 ' + notEqualIcon + ' (' + comparefile_name + ') ' + posCompare + '번째</td></tr>'
 					$('.resultline').append(resultline)
 					//BLOCK_LOCATION_MISMATCHING "주황색"으로 표기
 					classListStandard = "summary.standard" + commonStandardBlock[x].replaceAll(" ", "").replace(/[0-9]/g, "")
@@ -670,7 +671,7 @@ function BLOCK_LOCATION_MISMATCHING(key, data_info_standardfile, data_info_compa
 							let resultline = ''
 							var posStandard = z + 1
 							var posCompare = hasSameTopBlocksCompare.indexOf(hasSameTopBlocksStandard[z]) + 1
-							resultline = '<tr><td class = "compareresult">[BLOCK_LOCATION_MISMATCHING]' + hasSameTopBlocksStandard[z].replaceAll(">", "&#10097") + '<br>(' + standardfile_name + ') ' + posStandard + '번째 ' + notEqualIcon + ' (' + comparefile_name + ') ' + posCompare + '번째</td></tr>'
+							resultline = '<tr><td class = "compareresult">[BLOCK_LOCATION_MISMATCHING] ' + hasSameTopBlocksStandard[z].replaceAll(">", "<b> &#5171; </b>") + '<br>(' + standardfile_name + ') ' + posStandard + '번째 ' + notEqualIcon + ' (' + comparefile_name + ') ' + posCompare + '번째</td></tr>'
 							$('.resultline').append(resultline)
 							//BLOCK_LOCATION_MISMATCHING 색깔 표기
 							var classListStandard = ""
@@ -720,11 +721,11 @@ function DATA_MISSING(fileA_blockName, fileA_dataName, fileA_dataNameDuplicate, 
 				var copy2 = existOnlyOneFile[z]
 				var order = parseInt(copy1.replace(/[^0-9]/g, '')) + 1
 				var dataName = "(" + order + ") " + copy2.replace(/[0-9]/g, '')
-				var printText = '<tr><td class = "compareresult">[DATA_MISSING] ' + fileA_blockName.replaceAll(">", "&#10097") + ' --' + dataName + '<br>'
+				var printText = '<tr><td class = "compareresult">[DATA_MISSING] ' + fileA_blockName.replaceAll(">", "<b> &#5171; </b>") + ' --' + dataName + '<br>'
 				printText += '(' + fileA_name + ') 존재 O ' + notEqualIcon + ' (' + fileB_name + ') 존재 X</td></tr>'
 				DATA_MISSING_PRINT.push(printText)
 			} else {
-				var printText = '<tr><td class = "compareresult">[DATA_MISSING] ' + fileA_blockName.replaceAll(">", "&#10097") + ' --' + existOnlyOneFile[z] + '<br>'
+				var printText = '<tr><td class = "compareresult">[DATA_MISSING] ' + fileA_blockName.replaceAll(">", "<b> &#5171; </b>") + ' --' + existOnlyOneFile[z] + '<br>'
 				printText += '(' + fileA_name + ') 존재 O ' + notEqualIcon + ' (' + fileB_name + ') 존재 X</td></tr>'
 				DATA_MISSING_PRINT.push(printText)
 			}
@@ -756,11 +757,11 @@ function DATA_VALUE_MISMATCHING(dataNameForStandard, dataNameForStandardDuplicat
 				var copy2 = dataNameForStandardDuplicate[z]
 				var order = parseInt(copy1.replace(/[^0-9]/g, '')) + 1
 				var dataName = "(" + order + ") " + copy2.replace(/[0-9]/g, '')
-				var printText = '<tr><td class = "compareresult">[DATA_VALUE_MISMATCHING] ' + blockNameForStandard.replaceAll(">", "&#10097") + ' --' + dataName + '<br>'
+				var printText = '<tr><td class = "compareresult">[DATA_VALUE_MISMATCHING] ' + blockNameForStandard.replaceAll(">", "<b> &#5171; </b>") + ' --' + dataName + '<br>'
 				printText += '(' + standardfile_name + ') :: ' + dataValueForStandard[z] + ' ' + notEqualIcon + ' (' + comparefile_name + ') :: ' + dataValueForCompare[compareIndex] + '</td></tr>'
 				DATA_VALUE_MISMATCHING_PRINT.push(printText)
 			} else {
-				var printText = '<tr><td class = "compareresult">[DATA_VALUE_MISMATCHING] ' + blockNameForStandard.replaceAll(">", "&#10097") + ' --' + dataNameForStandardDuplicate[z] + '<br>'
+				var printText = '<tr><td class = "compareresult">[DATA_VALUE_MISMATCHING] ' + blockNameForStandard.replaceAll(">", "<b> &#5171; </b>") + ' --' + dataNameForStandardDuplicate[z] + '<br>'
 				printText += '(' + standardfile_name + ') :: ' + dataValueForStandard[z] + ' ' + notEqualIcon + ' (' + comparefile_name + ') :: ' + dataValueForCompare[compareIndex] + '</td></tr>'
 				DATA_VALUE_MISMATCHING_PRINT.push(printText)
 			}
