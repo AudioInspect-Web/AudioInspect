@@ -395,6 +395,7 @@ ul.compare_tabs li:hover {
 
 /* selectFileDatabase Modal Window */
 .top {
+	width:100%;
 	padding-top: 1%;
 	margin: 0%;
 	height: 1.5em;
@@ -453,13 +454,16 @@ ul.compare_tabs li:hover {
 }
 
 
+
 .menu a {
 	cursor: pointer;
 	font-weight: bold;
 	font-size: 1.3em;
+	margin-left:1.0em;
 }
 
 .menu .hide {
+	columns:2;
 	display: none;
 }
 
@@ -468,12 +472,16 @@ ul.compare_tabs li:hover {
 	font-weight: bold;
 	font-size: 1.3em;
 }
+input[type=checkbox]{
+	zoom:1.5;
+}
 
 ul {
 	list-style: none;
 }
 
 .select-list {
+	margin:0;
 	font-size: 1.2em;
 	padding: 4px;
 }
@@ -499,7 +507,7 @@ ul {
 	border: 1px solid #444444;
 }
 
-.search {
+.search_text {
 	width: 60%;
 	background-color: white;
 	height: 32px;

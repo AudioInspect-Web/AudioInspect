@@ -5,40 +5,29 @@ var standardfilesData = {
 	semiMetaData: [],
 	metaData: []
 }
-function standard_addFile(fileLocation, files) {
+function standard_addFile(files) {
 	// 첨부파일 개수 확인
 	if (standardfilesArr.length > 0) {
 		alert("기준 파일은 최대 1개 까지 첨부 가능합니다.");
 	} else {
-		switch(fileLocation){
-			case "DB":
-				$('.standard_name').append(files[0].fileName)
-				$('.standard_size').append(files[0].fileSize)
-				$('.standard_fileType').append(files[0].fileType)
-				$('.standard_location').append(files[0].fileLocation)
-				break
-			case "local":
-				for (const file of files) {
-					// 첨부파일 검증
-					if (validation(file)) {
-						// 파일 배열에 담기
-						var reader = new FileReader()
-						reader.onload = function() {
-							standardfilesArr.push(file)
-							standardfilesData.fileName.push(file.name)
-						};
-						reader.readAsDataURL(file)
-						// 목록 추가
-						$('.standard_name').append(file.name)
-						$('.standard_size').append(returnFileSize(file.size))
-						$('.standard_fileType').append(file.type)
-						$('.standard_location').append("파일 탐색기")
-						return true
-					} else {
-						continue
-					}
-				}
-				break
+		for (const file of files) {
+			// 첨부파일 검증
+			if (validation(file)) {
+				// 파일 배열에 담기
+				var reader = new FileReader()
+				reader.onload = function() {
+					standardfilesArr.push(file)
+					standardfilesData.fileName.push(file.name)
+				};
+				reader.readAsDataURL(file)
+				// 목록 추가
+				$('.standard_name').append(file.name)
+				$('.standard_size').append(file.size)
+				$('.standard_date').append(file.lastModifiedDate)
+				return true
+			} else {
+				continue
+			}
 		}
 	}
 	// 초기화
@@ -56,7 +45,7 @@ function standard_deleteFile() {
 
 //input 클릭으로 파일 받았을 때
 $(document).on("change", "div#selectStandardFileLocation div#selectStandardFileLocationContent div input#standardfilebox", function(e) {
-	standard_addFile("local", e.target.files)
+	standard_addFile(e.target.files)
 	dropZone.classList.add("active")
 	//handleFiles(): SemiMetaData.js에서, StandMetaData(): MetaData.js에서 호출
 	handleFiles(e.target.files)
@@ -105,9 +94,9 @@ dropZone.addEventListener("dragover", function(e) {
 dropZone.addEventListener("drop", function(e) {
 	e.preventDefault()
 	toggleClass("drop")
-	e.target.style.opacity = 1.0
+	e.target.style.opacity = 1.0;
 	file = e.dataTransfer && e.dataTransfer.files
-	standard_addFile("local", file)
+	standard_addFile(file);
 	//handleFiles(): SemiMetaData.js에서, StandMetaData(): MetaData.js에서 호출
 	handleFiles(file)
 	StandMetaData(file)
@@ -122,7 +111,7 @@ var comparefilesData = {
 	metaData: []
 }
 var comparefile_numb = 1;
-function compare_addFile(fileLocation, files) {
+function compare_addFile(files) {
 	for (const file of files) {
 		if (standardfilesArr.length == 0) {
 			alert("Standard file을 먼저 선택해 주세요");
@@ -132,177 +121,147 @@ function compare_addFile(fileLocation, files) {
 		}
 		// 첨부파일 검증
 		else {
-			var filename
-			switch (fileLocation) {
-				case "DB":
-					console.log(file)
-					if(compare_checkDuplicate(file.fileName)){
-						$(".removetr").remove();
-						if(file.fileName == files[files.length-1].fileName){
-							var compare_infos = '<tr name = "trStaff" class = "trline" id = "trline">'
-							compare_infos += '<td class = "filenum" style="background: lightgrey; font-weight:bold">' + "Compare file " + comparefile_numb + '</td>'
-							comparefile_numb++
-							compare_infos += '<td style="background: lightgrey; font-weight:bold" id = "' + file.fileName + '">' + file.fileName + '</td>'
-							compare_infos += '<td style="background: lightgrey; font-weight:bold">' + file.fileSize + '</td>'
-							compare_infos += '<td style="background: lightgrey; font-weight:bold">' + file.fileType + '</td>'
-							compare_infos += '<td style="background: lightgrey; font-weight:bold">' + file.fileLocation + '</td>'
-							compare_infos += '</tr>'
-							$('#filelisttable_body').append(compare_infos)
-						}else{
-							var compare_infos = '<tr name = "trStaff" class = "trline" id = "trline">'
-							compare_infos += '<td class = "filenum">' + "Compare file " + comparefile_numb + '</td>'
-							comparefile_numb++
-							compare_infos += '<td id = "' + file.fileName + '">' + file.fileName + '</td>'
-							compare_infos += '<td>' + file.fileSize + '</td>'
-							compare_infos += '<td>' + file.fileType + '</td>'
-							compare_infos += '<td>' + file.fileLocation + '</td>'
-							compare_infos += '</tr>'
-							$('#filelisttable_body').append(compare_infos)
-						}
-						$('ul.compare_tabs li').removeClass('current')
-						$('div.compare_context table').removeClass('current')
-						filename = file.fileName.replaceAll(" ", "").replaceAll(".", "")
-						//탭메뉴 추가
-						var compare_tabs = '<li id="cpdelete" class="tab-link current";  data-tab="' + filename + '">' + file.fileName + '<button id = "buttonhover" class="buttonhover" name = "tabdelete">X</button></li>';
-						$('.compare_tabs').append(compare_tabs);
+			if (compare_checkDuplicate(file)) {
+				if (validation(file)) {
+					// 파일 배열에 담기
+					var reader = new FileReader();
+					reader.onload = function() {
+						comparefilesArr.push(file);
+						comparefilesData.fileName.push(file.name)
+					};
+					reader.readAsDataURL(file);
+					$(".removetr").remove();
+					if (file.name == files[files.length - 1].name) {
+						let compare_infos = '';
+						compare_infos = '<tr name = "trStaff" class = "trline" id = "trline">';
+						compare_infos += '<td class = "filenum" style="background: lightgrey; font-weight:bold">' + "Compare file " + comparefile_numb + '</td>';
+						comparefile_numb++;
+						compare_name = '';
+						compare_name = '<td style="background: lightgrey; font-weight:bold" id = "' + file.name + '">' + file.name + '</td>';
+						compare_infos += compare_name;
+						compare_infos += '<td style="background: lightgrey; font-weight:bold">' + returnFileSize(file.size) + '</td>';
+						compare_infos += '<td style="background: lightgrey; font-weight:bold">' + file.lastModifiedDate + '</td>';
+						compare_infos += '</tr>';
+						$('#filelisttable_body').append(compare_infos);
+					} else {
+						let compare_infos = '';
+						compare_infos = '<tr name = "trStaff" class = "trline" id = "trline">';
+						compare_infos += '<td class = "filenum">' + "Compare file " + comparefile_numb + '</td>';
+						comparefile_numb++;
+						compare_name = '';
+						compare_name = '<td id = "' + file.name + '">' + file.name + '</td>';
+						compare_infos += compare_name;
+						compare_infos += '<td>' + returnFileSize(file.size) + '</td>';
+						compare_infos += '<td>' + file.lastModifiedDate + '</td>';
+						compare_infos += '</tr>';
+						$('#filelisttable_body').append(compare_infos);
 					}
-					break
-				case "local":
-					if (compare_checkDuplicate(file)) {
-						if (validation(file)) {
-							// 파일 배열에 담기
-							var reader = new FileReader();
-							reader.onload = function() {
-								comparefilesArr.push(file);
-								comparefilesData.fileName.push(file.name)
-							};
-							reader.readAsDataURL(file);
-							$(".removetr").remove();
-							if (file.name == files[files.length - 1].name) {
-								var compare_infos = '<tr name = "trStaff" class = "trline" id = "trline">'
-								compare_infos += '<td class = "filenum" style="background: lightgrey; font-weight:bold">' + "Compare file " + comparefile_numb + '</td>'
-								comparefile_numb++
-								compare_infos += '<td style="background: lightgrey; font-weight:bold" id = "' + file.name + '">' + file.name + '</td>'
-								compare_infos += '<td style="background: lightgrey; font-weight:bold">' + returnFileSize(file.size) + '</td>'
-								compare_infos += '<td style="background: lightgrey; font-weight:bold">' + file.type + '</td>'
-								compare_infos += '<td style="background: lightgrey; font-weight:bold">파일 탐색기</td>'
-								compare_infos += '</tr>'
-								$('#filelisttable_body').append(compare_infos)
-							} else {
-								var compare_infos = '<tr name = "trStaff" class = "trline" id = "trline">'
-								compare_infos += '<td class = "filenum">' + "Compare file " + comparefile_numb + '</td>'
-								comparefile_numb++
-								compare_infos += '<td id = "' + file.name + '">' + file.name + '</td>'
-								compare_infos += '<td>' + returnFileSize(file.size) + '</td>'
-								compare_infos += '<td>' + file.type + '</td>'
-								compare_infos += '<td>파일 탐색기</td>'
-								compare_infos += '</tr>'
-								$('#filelisttable_body').append(compare_infos)
+					$('ul.compare_tabs li').removeClass('current');
+					$('div.compare_context table').removeClass('current');
+					//file명에서 .을 제거한 문자열: compare_text에 tabmenu함수가 적용되지 않음을 해결하기 위해
+					let filename = file.name.replaceAll(" ", "").replaceAll(".", "");
+					//탭메뉴 추가
+					let compare_tabs = '';
+					compare_tabs += '<li id="cpdelete" class="tab-link current";  data-tab="' + filename + '">' + file.name + '<button id = "buttonhover" class="buttonhover" name = "tabdelete">X</button></li>';
+					$('.compare_tabs').append(compare_tabs);
+					//파일 별로 mediainfo 결과창 추가
+					let compare_context = '';
+					// compare_context += '<textarea id="' + filename + '" class="comparefile">' + file.name + '</textarea>';
+					compare_context += '<table id="' + filename + '" class="comparefile current"></table>';
+					//tabmenu.js없어져서 getCompareResults.js로 변경
+					compare_context += '<script src="resources/js/getCompareResults.js"></script>';
+					$('.compare_context').append(compare_context);
+					//탭메뉴 파일명 옆 X로 지우기
+					$('ul.compare_tabs li').on("click", "button[name=tabdelete]", function() {
+						//현재 누른 탭메뉴의 파일명 불러와서 삭제
+						//var compare_tabs = $(".tab-link.current").text();
+						var compare_tabs_data = $(this).parent();
+						compare_tabs_data.remove();
+						var t = compare_tabs_data[0].innerText;
+						var a = t.replaceAll(" ", "").replaceAll('.', '').slice(0, -1);
+						//tab내용 지우기
+						if (compare_tabs_data[0].classList.value == "tab-link current") {
+							var compare_context = $(".comparefile.current");
+							compare_context.remove();
+							//compare_context.empty();
+						}
+						else {
+							for (var r = 0; r < $(".comparefile").length; r++) {
+								var comparefile_del = $(".comparefile")[r];
+								if (a == comparefile_del.id) {
+									var b = comparefile_del;
+									b.remove();
+								}
 							}
-							$('ul.compare_tabs li').removeClass('current')
-							$('div.compare_context table').removeClass('current')
-							filename = file.name.replaceAll(" ", "").replaceAll(".", "")
-							//탭메뉴 추가
-							var compare_tabs = '<li id="cpdelete" class="tab-link current";  data-tab="' + filename + '">' + file.name + '<button id = "buttonhover" class="buttonhover" name = "tabdelete">X</button></li>';
-							$('.compare_tabs').append(compare_tabs);
 						}
-					}
-					break
+						var deletename = t.replace("X", "");
+						//삭제한 탭메뉴의 파일을 comparefilesArr, comparefilesData에서도 삭제
+						var deleteIndex = comparefilesArr.findIndex(x => x.name == deletename)
+						comparefilesArr.splice(deleteIndex, 1)
+						comparefilesData.fileName.splice(deleteIndex, 1)
+						comparefilesData.semiMetaData.splice(deleteIndex, 1)
+						comparefilesData.metaData.splice(deleteIndex, 1)
+						//탭메뉴의 파일명과 filelist의 파일명이 같은지 확인하고 삭제
+						for (var r = 1; r < ($(".trline").length) + 1; r++) {
+							var filelist_filename = document.getElementById("filelisttable_body").getElementsByTagName("tr");
+							var cell = filelist_filename[r].cells[1].innerText;
+							//탭메뉴의 파일명을 text로 불러와서 삭제버튼인 X도 같이 출력되어 filelist에도 X를 붙이고 같은지 확인
+							cell += "X";
+							if (t == cell) {
+								//console.log(filelist_filename);
+								//console.log(cell);
+								var deletecel = filelist_filename[r].cells[1].parentElement;
+								deletecel.remove();
+							}
+							//result부분 삭제
+							$(".resultline").empty();
+							$(".resultline_2").empty();
+							$(".line").empty();
+							$("#comparefilebox").val("");
+						}
+						//filelist No. 삭제 시 번호 다시 세기
+						for (var i = 0; i < $(".trline").length; i++) {
+							$(".trline")[i].cells[0].innerHTML = '<td class = "filenum">' + "Compare file " + (i + 1) + '</td>';
+						}
+						//삭제 후 파일을 다시 넣으려면 comparefile_numb를 바꿔줘야 함
+						comparefile_numb = $(".trline").length + 1
+					})
+					//current tab 클릭시 filelist에 표시
+					$('ul.compare_tabs li').click(function() {
+						var compare_tabs = $(".tab-link.current").text()
+						for (var r = 1; r < ($(".trline").length) + 1; r++) {
+							var filelist_filename = document.getElementById("filelisttable_body").getElementsByTagName("tr")
+							var cell = filelist_filename[r].cells[1].innerText;
+							//탭메뉴의 파일명을 text로 불러와서 삭제버튼인 X도 같이 출력되어 filelist에도 X를 붙이고 같은지 확인
+							cell += "X"
+							if (compare_tabs == cell) {
+								for (var i = 0; i < 4; i++) {
+									var currenttab = filelist_filename[r].cells[i]
+									currenttab.style.backgroundColor = "lightgrey"
+									currenttab.style.fontWeight = "bold"
+								}
+							}
+							else {
+								for (var i = 0; i < 4; i++) {
+									var currenttab = filelist_filename[r].cells[i]
+									currenttab.style.backgroundColor = "white"
+									currenttab.style.fontWeight = "normal"
+								}
+							}
+						}
+					})
+				}
 			}
-			//탭메뉴 추가
-			//let compare_tabs = '';
-			//compare_tabs += '<li id="cpdelete" class="tab-link current";  data-tab="' + filename + '">' + file.name + '<button id = "buttonhover" class="buttonhover" name = "tabdelete">X</button></li>';
-			//$('.compare_tabs').append(compare_tabs);
-			//파일 별로 mediainfo 결과창 추가
-			let compare_context = '';
-			compare_context += '<table id="' + filename + '" class="comparefile current"></table>';
-			//tabmenu.js없어져서 getCompareResults.js로 변경
-			compare_context += '<script src="resources/js/getCompareResults.js"></script>';
-			$('.compare_context').append(compare_context);
-			//탭메뉴 파일명 옆 X로 지우기
-			$('ul.compare_tabs li').on("click", "button[name=tabdelete]", function() {
-				//현재 누른 탭메뉴의 파일명 불러와서 삭제
-				var compare_tabs_data = $(this).parent();
-				compare_tabs_data.remove();
-				var t = compare_tabs_data[0].innerText;
-				var a = t.replaceAll(" ", "").replaceAll('.', '').slice(0, -1);
-				//tab내용 지우기
-				if (compare_tabs_data[0].classList.value == "tab-link current") {
-					var compare_context = $(".comparefile.current");
-					compare_context.remove();
-				}
-				else {
-					for (var r = 0; r < $(".comparefile").length; r++) {
-						var comparefile_del = $(".comparefile")[r];
-						if (a == comparefile_del.id) {
-							var b = comparefile_del;
-							b.remove();
-						}
-					}
-				}
-				var deletename = t.replace("X", "");
-				//삭제한 탭메뉴의 파일을 comparefilesArr, comparefilesData에서도 삭제
-				var deleteIndex = comparefilesArr.findIndex(x => x.name == deletename)
-				comparefilesArr.splice(deleteIndex, 1)
-				comparefilesData.fileName.splice(deleteIndex, 1)
-				comparefilesData.semiMetaData.splice(deleteIndex, 1)
-				comparefilesData.metaData.splice(deleteIndex, 1)
-				//탭메뉴의 파일명과 filelist의 파일명이 같은지 확인하고 삭제
-				for (var r = 1; r < ($(".trline").length) + 1; r++) {
-					var filelist_filename = document.getElementById("filelisttable_body").getElementsByTagName("tr");
-					var cell = filelist_filename[r].cells[1].innerText;
-					//탭메뉴의 파일명을 text로 불러와서 삭제버튼인 X도 같이 출력되어 filelist에도 X를 붙이고 같은지 확인
-					cell += "X";
-					if (t == cell) {
-						//console.log(filelist_filename);
-						//console.log(cell);
-						var deletecel = filelist_filename[r].cells[1].parentElement;
-						deletecel.remove();
-					}
-					//result부분 삭제
-					$(".resultline").empty();
-					$(".resultline_2").empty();
-					$(".line").empty();
-					$("#comparefilebox").val("");
-				}
-				//filelist No. 삭제 시 번호 다시 세기
-				for (var i = 0; i < $(".trline").length; i++) {
-					$(".trline")[i].cells[0].innerHTML = '<td class = "filenum">' + "Compare file " + (i + 1) + '</td>';
-				}
-				//삭제 후 파일을 다시 넣으려면 comparefile_numb를 바꿔줘야 함
-				comparefile_numb = $(".trline").length + 1
-			})
-			//current tab 클릭시 filelist에 표시
-			$('ul.compare_tabs li').click(function() {
-				var compare_tabs = $(".tab-link.current").text()
-				for (var r = 1; r < ($(".trline").length) + 1; r++) {
-					var filelist_filename = document.getElementById("filelisttable_body").getElementsByTagName("tr")
-					var cell = filelist_filename[r].cells[1].innerText;
-					//탭메뉴의 파일명을 text로 불러와서 삭제버튼인 X도 같이 출력되어 filelist에도 X를 붙이고 같은지 확인
-					cell += "X"
-					if (compare_tabs == cell) {
-						for (var i = 0; i < 4; i++) {
-							var currenttab = filelist_filename[r].cells[i]
-							currenttab.style.backgroundColor = "lightgrey"
-							currenttab.style.fontWeight = "bold"
-						}
-					}
-					else {
-						for (var i = 0; i < 4; i++) {
-							var currenttab = filelist_filename[r].cells[i]
-							currenttab.style.backgroundColor = "white"
-							currenttab.style.fontWeight = "normal"
-						}
-					}
-				}
-			})
+			else {
+				continue
+			}
 		}
 	}
 }
 
 //input 클릭으로 파일 받았을 때
 $(document).on("change", "div#selectCompareFileLocation div#selectCompareFileLocationContent div input#comparefilebox", function(e) {
-	compare_addFile("local", e.target.files)
+	compare_addFile(e.target.files)
 	comparedropZone.classList.add("active");
 	//comparehandleFiles(): SemiMetaData.js에서, CompMetaData(): MetaData.js에서 호출
 	for (var i = 0; i < e.target.files.length; i++) {
@@ -362,7 +321,7 @@ comparedropZone.addEventListener("drop", function(e) {
 	toggleClass("drop")
 	e.target.style.opacity = 1.0
 	file = e.dataTransfer && e.dataTransfer.files
-	compare_addFile("local", file)
+	compare_addFile(file)
 	//comparehandleFiles(): SemiMetaData.js에서, CompMetaData(): MetaData.js에서 호출
 	for (var i = 0; i < file.length; i++) {
 		CompMetaData(file[i])
@@ -436,9 +395,8 @@ $('#reset').click(function() {
 	if (answer == true) {
 		$(".standard_name").empty();
 		$(".standard_size").empty();
-		$(".standard_fileType").empty();
-		$(".standard_location").empty();
 		$("#standardfile").empty();
+		$(".standard_date").empty();
 		$("#standardfile").val("");
 		$('.line').val("");
 		$(".resultline").empty();

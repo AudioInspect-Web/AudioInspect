@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DB {
-	private static String dburl = "jdbc:mysql://localhost:3306/audioinspect?serverTimezone=UTC";
+	private static String dburl = "jdbc:mysql://localhost:3306/audioinspect?serverTimezone=Asia/Seoul";
 	private static String dbUser = "root";
 	private static String dbpasswd = "1234";
 	private static Connection conn;

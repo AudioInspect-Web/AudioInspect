@@ -21,12 +21,17 @@ function getFileListFromDB(query) {
 
 
 function makeFileListFromDB(data){
-	var index = 1;
+	var result_length = $(".result-style_th").length;
+	if(result_length == 8){
+		var index = 1;
+	}
+	else{
+		var index = result_length + 1 - 8;
+	}
 	for(key in data){
 		var exportdata = Object.entries(data[key])
-		//selectFileDatabaseModal.js에서 beSelectedFile() 호출
-		var fileInfoFromDB = "<tr onclick = 'beSelectedFile($(this))'>"
-		fileInfoFromDB += "<td class='result-style_td'>" + index + "</td>"
+		var fileInfoFromDB = "<tr>"
+		fileInfoFromDB += "<td class='result-style_th'>" + index + "</td>"
 		fileInfoFromDB += "<td class='result-style_td'>" + key + "</td>"
 		fileInfoFromDB += "<td class='result-style_td'>" + exportdata[0][1] + "</td>"
 		fileInfoFromDB += "<td class='result-style_td'>" + exportdata[1][1] + "</td>"

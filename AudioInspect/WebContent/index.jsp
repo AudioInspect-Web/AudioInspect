@@ -81,6 +81,9 @@
 	<script src="resources/js/selectFileLocationModal.js"></script>
 	<script src="resources/js/selectFileDatabaseModal.js"></script>
 	<script src="resources/js/getFileListFromDB.js"></script>
+	<script src="resources/js/getOptionFileListFromDB.js"></script>
+	
+	
 
 	<div>
 		<div class="box">
@@ -90,8 +93,7 @@
 						<td style="width: 10%">No.</td>
 						<td style="width: 30%">파일명</td>
 						<td style="width: 20%">파일 크기</td>
-						<td style="width: 20%">파일 확장자</td>
-						<td style="width: 20%">파일 위치</td>
+						<td style="width: 40%">수정한 날짜</td>
 					</tr>
 				</thead>
 				<tbody id="filelisttable_body">
@@ -99,22 +101,19 @@
 						<td style="width: 10%" class="detailline">Standard file</td>
 						<td style="width: 30%" class="standard_name"></td>
 						<td style="width: 20%" class="standard_size"></td>
-						<td style="width: 20%" class="standard_fileType"></td>
-						<td style="width: 20%" class="standard_location"></td>
+						<td style="width: 40%" class="standard_date"></td>
 					</tr>
 					<tr class="removetr">
 						<td style="width: 10%; height: 25px"></td>
 						<td style="width: 30%"></td>
 						<td style="width: 20%"></td>
-						<td style="width: 20%"></td>
-						<td style="width: 20%"></td>
+						<td style="width: 40%"></td>
 					</tr>
 					<tr class="removetr">
 						<td style="width: 10%; height: 25px"></td>
 						<td style="width: 30%"></td>
 						<td style="width: 20%"></td>
-						<td style="width: 20%"></td>
-						<td style="width: 20%"></td>
+						<td style="width: 40%"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -125,8 +124,7 @@
          $(".stbtn").click(function() {
             $(".standard_name").empty();
             $(".standard_size").empty();
-            $(".standard_fileType").empty();
-            $(".standard_location").empty();
+            $(".standard_date").empty();
             $("#standardfile").empty();
             $("#standardfile").val("");
             $('.line').val("");
