@@ -1,24 +1,20 @@
-var initQueryForOriginal = "select sf.file_name, sf.recording_mode, sf.recording_quality, sf.file_type, sd.smart_device_model_name, sd.smart_device_model_number, osd.os_name, osd.os_version\n"
+var initQueryForOriginal = "select sf.original_speech_file_id, sf.file_name, sf.recording_mode, sf.recording_quality, sf.file_type, sd.smart_device_model_name, sd.smart_device_model_number, osd.os_name, osd.os_version\n"
 	+ "from original_speech_file sf, recording_editing_device red, smart_device sd, os_for_smart_devices osd\n"
 	+ "where sf.recording_device_id=red.recording_editing_device_id and red.smart_device_id = sd.smart_device_id and red.os_id = osd.os_id"
-var initQueryForEdited = "select esf.file_name, esf.editing_app_name, esf.recording_mode, esf.recording_quality, esf.file_type, sd.smart_device_model_name, sd.smart_device_model_number, osd.os_name, osd.os_version\n"
+var initQueryForEdited = "select esf.edited_speech_file_id, esf.file_name, esf.editing_app_name, esf.recording_mode, esf.recording_quality, esf.file_type, sd.smart_device_model_name, sd.smart_device_model_number, osd.os_name, osd.os_version\n"
 	+ "from edited_speech_file esf, recording_editing_device red, smart_device sd, os_for_smart_devices osd\n"
 	+ "where esf.editing_device_id=red.recording_editing_device_id and red.smart_device_id = sd.smart_device_id and red.os_id = osd.os_id"
 function manuclick() {
 	var resultarr = [];
-	var resultarr_2 = [];
 	$(".result_list").empty();
 	// 선택된 목록 가져오기
-	const query = 'input[type="checkbox"]:checked';
+	const query = 'input[class="manufacturerlist"]:checked';
 	const selectedEls = document.querySelectorAll(query);
 	// 선택된 목록에서 value 찾기
 	let result = "";
-	let result2 = '';
 	selectedEls.forEach((el) => {
 		result = el.name + '';
 		resultarr.push(result);
-		result2 = el.className + '';
-		resultarr_2.push(result2)
 	});
 	for (var i = 0; i < resultarr.length; i++) {
 		if (resultarr[i] == "manuAll") {
@@ -36,7 +32,6 @@ function manuclick() {
 			$("input[name = 'manuAll']").attr("checked", false);
 		}
 	}
-	console.log(resultarr)
 }
 
 function editclick() {

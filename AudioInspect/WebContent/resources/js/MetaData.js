@@ -65,13 +65,14 @@ function CompMetaData(file) {
 	})
 }
 
-function MetaDataFromDB(selectedFileId) {
+function MetaDataFromDB(selectedFileId, selectedFileType) {
 	$.ajax({
 		method: "POST",
 		url: '/metaDataFromDBServlet; charset=utf-8',
 		dataType: 'text',
 		data: {
-			fileId: selectedFileId
+			fileId: selectedFileId,
+			fileType: selectedFileType
 		},
 		complete: function() {
 			console.log("성공")

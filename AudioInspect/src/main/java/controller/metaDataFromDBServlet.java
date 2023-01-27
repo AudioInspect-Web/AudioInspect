@@ -15,7 +15,8 @@ public class metaDataFromDBServlet extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String fileId = request.getParameter("fileId");
-		MetaDataDAO.getMetaDataID(fileId);
+		String fileType = request.getParameter("fileType");
+		MetaDataDAO.getMetaDataID(fileId, fileType);
 		PrintWriter out = response.getWriter();
 	}
 
