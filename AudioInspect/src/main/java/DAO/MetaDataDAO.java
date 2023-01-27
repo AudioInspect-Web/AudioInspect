@@ -11,21 +11,17 @@ import Util.DB;
 
 public class MetaDataDAO {
 	public static void getMetaDataID(String fileId) {
-		System.out.println(fileId);
 		String query;
-		/*
-		switch (isItEdited) {
-		case "원본":
-			query = "select sf.meta_data_id\n"
-				+ "from original_speech_file sf\n"
-				+ "where sf.file_name =" + fileName + " and sf.file_type = " +fileType;
-			break;
-		default:
+		if(fileId.contains("원본")) {
+			System.out.println("원본 : " + fileId.replaceAll("[^0-9]", ""));
 			query = "select sf.meta_data_id\n"
 					+ "from original_speech_file sf\n"
-					+ "where sf.file_name =" + fileName + " and sf.file_type = " +fileType;
-			break;
+					+ "where sf.original_speech_file_id =" + fileId.replaceAll("[^0-9]", "");
+		}else {
+			System.out.println("편집 : " + fileId);
+			query = "select esf.meta_data_id\n"
+					+ "from edited_speech_file esf\n"
+					+ "where esf.edited_speech_file_id =" + fileId;
 		}
-		*/
 	}
 }
