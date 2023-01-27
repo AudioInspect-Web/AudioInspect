@@ -79,4 +79,14 @@
     <servlet-name>fileListServlet</servlet-name>
     <url-pattern>/fileListServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>metaDataFromDBServlet</display-name>
+    <servlet-name>metaDataFromDBServlet</servlet-name>
+    <servlet-class>controller.metaDataFromDBServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>metaDataFromDBServlet</servlet-name>
+    <url-pattern>/metaDataFromDBServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -41,8 +41,6 @@ function standard_addFile(fileLocation, files) {
 				break
 		}
 	}
-	// 초기화
-	document.querySelector("input[type=file]").value = ""
 }
 
 function standard_deleteFile() {
