@@ -63,7 +63,7 @@ function modal_view() {
 	                        <li class = "select-list"><input type="button" class = "search_button" value="검색 키워드 적용"></li>
 	                        <hr>
 	                        <li class = "select-text">검색 옵션</li>
-	                        <li class = "select-list"><input type="checkbox" class ="text_search" name = "file_name" checked = "on">파일 이름으로 검색</li>
+	                        <li class = "select-list"><input type="checkbox" class ="text_search" name = "file_name">파일 이름으로 검색</li>
 	                        <li class = "select-list"><input type="checkbox" class ="text_search" name = "record_device">녹음 모델명으로 검색</li>
 	                        <li class = "select-list"><input type="checkbox" class ="text_search" name = "record_device_num">녹음 모델 넘버로 검색</li>
 	                     </ul>
@@ -144,25 +144,32 @@ function modal_view() {
 			manuclick()
 		})
 		$(".editlist").click(function() {
+			manuclick()
 			editclick()
 		})
 		$(".editlist2").click(function() {
+			manuclick()
 			editclick2()
 		})
 		$(".OSlist").click(function() {
+			manuclick()
 			OSclick()
 		})
 		$(".searchlist").click(function() {
+			manuclick()
 			searchclick()
 		})
 		$(".text_search").click(function() {
+			manuclick()
 			textclick()
 		})
 		$(".recordlist").click(function() {
+			manuclick()
 			recordclick()
 		})
 		//체크박스 체크 초기화
 		$(".selectdelete").click(function() {
+			manuclick()
 			deleteclick()
 		});
 		// menu 클래스 바로 하위에 있는 a 태그를 클릭했을때
