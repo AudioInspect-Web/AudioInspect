@@ -1,5 +1,11 @@
 var inputFileType
+var beSelectedFileForStandard = []
+var beSelectedFileForCompare = []
+
 function modal_view() {
+	//초기화
+	beSelectedFileForStandard = []
+	beSelectedFileForCompare = []
 	if (document.querySelector("#selectStandardFileLocation")) {
 		var selectStandardFileLocation = document.querySelector("#selectStandardFileLocation")
 		inputFileType = "standard"
@@ -166,8 +172,6 @@ function modal_view() {
 	})
 }
 
-var beSelectedFileForStandard = []
-var beSelectedFileForCompare = []
 function beSelectedFile(row){
 	var td = row.children()
 	switch(row.attr('class')){
