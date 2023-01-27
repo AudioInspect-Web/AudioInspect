@@ -4,7 +4,7 @@ var initQueryForOriginal = "select sf.file_name, sf.recording_mode, sf.recording
 var initQueryForEdited = "select esf.file_name, esf.editing_app_name, esf.recording_mode, esf.recording_quality, esf.file_type, sd.smart_device_model_name, sd.smart_device_model_number, osd.os_name, osd.os_version\n"
 	+ "from edited_speech_file esf, recording_editing_device red, smart_device sd, os_for_smart_devices osd\n"
 	+ "where esf.editing_device_id=red.recording_editing_device_id and red.smart_device_id = sd.smart_device_id and red.os_id = osd.os_id"
-
+var resultarr = [];
 function manuclick() {
 	$(".result_list").empty();
 	// 선택된 목록 가져오기
@@ -12,7 +12,6 @@ function manuclick() {
 	const selectedEls = document.querySelectorAll(query);
 	// 선택된 목록에서 value 찾기
 	let result = "";
-	var resultarr = [];
 	selectedEls.forEach((el) => {
 		result = el.name + '';
 		resultarr.push(result);
