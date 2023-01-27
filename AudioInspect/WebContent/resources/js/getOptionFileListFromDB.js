@@ -5,6 +5,7 @@ var initQueryForEdited = "select esf.file_name, esf.editing_app_name, esf.record
 	+ "from edited_speech_file esf, recording_editing_device red, smart_device sd, os_for_smart_devices osd\n"
 	+ "where esf.editing_device_id=red.recording_editing_device_id and red.smart_device_id = sd.smart_device_id and red.os_id = osd.os_id"
 var resultarr = [];
+var resultarr2 = [];
 function manuclick() {
 	$(".result_list").empty();
 	// 선택된 목록 가져오기
@@ -42,7 +43,6 @@ function editclick() {
 	const selectedEls =
 		document.querySelectorAll(query);
 	let result = '';
-	var resultarr2 = [];
 	selectedEls.forEach((el) => {
 		result = el.name + '';
 		resultarr2.push(result);
