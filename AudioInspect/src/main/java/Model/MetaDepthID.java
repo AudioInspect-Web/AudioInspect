@@ -65,46 +65,227 @@ public class MetaDepthID {
 		}
 	}
 	
-	public void getQueryByMetaDepth(String fileType, Integer depth) {
-		System.out.println("호출");
-		System.out.println(fileType);
-		System.out.println(depth);
-		String query = null;
+	public String getQueryByMetaDepth(String fileType, Integer depth, Integer meta_data_id) {
+		String query = "";
 		switch(depth) {
 		case 1:
-			System.out.println(meta_depth1_id);
-			for(int i = 0; i<meta_depth1_id.size() ; i++) {
-				System.out.println(meta_depth1_id.get(i));
-			}
-			//return query;
+			query = "where meta_data_id =" + meta_data_id;
+			break;
 		case 2:
-			//return query;
+			for(int i = 0; i<meta_depth1_id.size() ; i++) {
+				if (i != 0) {
+					query = "where meta_data_id =" + meta_data_id + " and " + fileType + "_meta_depth1_id =" + meta_depth1_id.get(i).replace("/", "");
+				} else {
+					query = " or where meta_data_id =" + meta_data_id + " and " + fileType + "_meta_depth1_id =" + meta_depth1_id.get(i).replace("/", "");
+				}
+			}
+			break;
 		case 3:
-			//return query;
+			for (int i = 0; i < meta_depth2_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth2_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 4:
-			//return query;
+			for (int i = 0; i < meta_depth3_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth3_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 5:
-			//return query;
+			for (int i = 0; i < meta_depth4_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth4_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 6:
-			//return query;
+			for (int i = 0; i < meta_depth5_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth5_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 7:
-			//return query;
+			for (int i = 0; i < meta_depth6_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth6_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 8:
-			//return query;
+			for (int i = 0; i < meta_depth7_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth7_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 9:
-			//return query;
+			for (int i = 0; i < meta_depth8_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth8_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 10:
-			//return query;
+			for (int i = 0; i < meta_depth9_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth9_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 11:
-			//return query;
+			for (int i = 0; i < meta_depth10_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth10_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 12:
-			//return query;
+			for (int i = 0; i < meta_depth11_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth11_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 13:
-			//return query;
+			for (int i = 0; i < meta_depth12_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth12_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;
 		case 14:
-			//return query;		
+			for (int i = 0; i < meta_depth13_id.size(); i++) {
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and ";
+				} else {
+					query += " or meta_data_id =" + meta_data_id + " and ";
+				}
+				String[] array = meta_depth13_id.get(i).split("/");
+				for (int j = 0; j < array.length; j++) {
+					if (j != array.length - 1) {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j] + " and ";
+					} else {
+						query += fileType + "_meta_depth" + Integer.toString(j + 1) + "_id =" + array[j];
+					}
+				}
+			}
+			break;		
 		}
-		//return query;
+		return query;
 	}
 	
 	public void printMetaDepthId() {

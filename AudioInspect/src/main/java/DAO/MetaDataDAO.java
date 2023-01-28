@@ -47,14 +47,8 @@ public class MetaDataDAO {
 		for (int i = 1; i <= depth; i++) {
 			String query = "select *\n"
 						+ "from " + fileType + "_meta_depth" + i + "\n"
-						+ "where meta_data_id =" + meta_data_id;
-			meta_depth_id.getQueryByMetaDepth(fileType, i);
-			/*
-			if(i>=2) {
-				query += ", "  + meta_depth_id.getQueryByMetaDepth(fileType, i);
-			}
-			*/
-			//System.out.println(query);
+						+ meta_depth_id.getQueryByMetaDepth(fileType, i, meta_data_id);
+			System.out.println(query);
 			ResultSet rs = null;
 			try {
 				PreparedStatement pstmt = DB.getConnection().prepareStatement(query);
@@ -70,13 +64,14 @@ public class MetaDataDAO {
 							metaDepthIdHistory += Integer.toString(rs.getInt(fileType + "_meta_depth" + j + "_id")) + "/";
 						}
 						meta_depth_id.setMetaDepthId(i, metaDepthIdHistory);
-						//meta_depth_id.printMetaDepthId();
+						//System.out.println(rs.getString("meta_name") + rs.getInt("meta_size") + rs.getString("meta_value") + rs.getString("info1") + rs.getString("info2") + rs.getString("info3") + rs.getString("info4") + rs.getInt("offset"));
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
 		}
+		meta_depth_id.printMetaDepthId();
 	}
 
 	private static Integer getMetaDataDepth(String fileType) {
