@@ -15,6 +15,7 @@ public class fileListServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String query = request.getParameter("sqlQuery");
+		System.out.println(query);
 		PrintWriter out = response.getWriter();
 		out.print(fileListDAO.getFileList(query));
 		out.flush();
