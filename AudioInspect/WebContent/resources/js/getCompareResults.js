@@ -280,7 +280,7 @@ function compareXML(tab_id, standardfile, comparefile, comparefile_name) {
 		if (current_filename == tab_id) {
 			cnt += 1;
 			if (cnt == 1) {
-				exportReportXMlCompare(tab_id, standardfile, comparefile, compare_name)
+				exportReportXMlCompare(tab_id, standardfile, comparefile, comparefile_name)
 			}
 		}
 	})
