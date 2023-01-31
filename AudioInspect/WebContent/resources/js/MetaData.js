@@ -74,8 +74,8 @@ function MetaDataFromDB(selectedFileId, selectedFileType) {
 			fileId: selectedFileId,
 			fileType: selectedFileType
 		},
-		complete: function() {
-			console.log("성공")
+		complete: function(data) {
+			console.log(data)
 		},
 		error: function(request, status, error) {
 			console.log(request.responseText);

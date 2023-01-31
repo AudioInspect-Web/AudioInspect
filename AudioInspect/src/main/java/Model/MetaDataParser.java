@@ -3,6 +3,7 @@ package Model;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -19,87 +20,122 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class MetaDataParser {
-	// XML 문서 파싱
-	//DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	//DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-	//Document document = documentBuilder.newDocument();
-
-	public void getMetaData(Integer is_block, String meta_name, Integer meta_size, String value, String info1, String info2, String info3, String info4, Integer offset, String currentMetaDepthIdHistory) throws ParserConfigurationException, IOException, TransformerException {
+	public String getMetaData2XML(String file_name, String fileType, ArrayList<ArrayList<String>> MetaData) throws ParserConfigurationException, IOException, TransformerException {
 		// XML 문서 생성
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 		Document document = documentBuilder.newDocument();
 		
-		//System.out.println(meta_name + " & " + meta_size + " & " + value + " & "+ info1 + " & " + info2 + " & " + info3 + " & " + info4 + " & " + offset);
-		//System.out.println(meta_name.getClass().getName() + " & " + meta_size.getClass().getName() + " & " + value.getClass().getName() + " & "+ info1.getClass().getName() + " & " + info2.getClass().getName() + " & " + info3.getClass().getName() + " & " + info4.getClass().getName() + " & " + offset.getClass().getName());
+		// 최상위 root 생성
+		Element root = document.createElement("Root");
+		document.appendChild(root);
+		
+		// MediaTrace 생성		
+		Element MediaTrace = document.createElement("MediaTrace");
+		MediaTrace.setAttribute("xmlns", "https://mediaarea.net/mediatrace");
+		MediaTrace.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+		MediaTrace.setAttribute("xsi:schemaLocation", "https://mediaarea.net/mediatrace https://mediaarea.net/mediatrace/mediatrace_0_1.xsd");
+		MediaTrace.setAttribute("version", "0.1");
+		root.appendChild(MediaTrace);
+		
+		// creatingLibrary 생성
+		Element creatingLibrary = document.createElement("creatingLibrary");
+		creatingLibrary.setAttribute("version", "21.03");
+		creatingLibrary.setAttribute("url", "https://mediaarea.net/MediaInfo");
+		creatingLibrary.setTextContent("MediaInfoLib");
+		MediaTrace.appendChild(creatingLibrary);
+		
+		// media 생성
+		Element media = document.createElement("media");
+		media.setAttribute("filename", file_name);
+		media.setAttribute("parser", fileType);
+		MediaTrace.appendChild(media);
 		
 		HashMap<String, Element> metaDataIsBlock = new HashMap<String, Element>();
-		switch(is_block) {
-		case 1: //Block
-			Element Block = document.createElement("block");
-			if(Integer.toString(offset) != "" && Integer.toString(offset) != null) {
-				Block.setAttribute("offset", Integer.toString(offset));
+		MetaData.forEach((i) -> {
+			String metaDepthId = i.get(0);
+			String is_block = i.get(1);
+			String offset = i.get(2);
+			String name = i.get(3);
+			String size = i.get(4);
+			String info = i.get(5);
+			String info2 = i.get(6);
+			String info3 = i.get(7);
+			String info4 = i.get(8);
+			String value = i.get(9);
+			switch(is_block) {
+			case "1": // Block
+				Element Block = document.createElement("block");
+				if (offset != "" && offset != null && !offset.isEmpty()) {
+					Block.setAttribute("offset", offset);
+				}
+				if (name != "" && name != null && !name.isEmpty()) {
+					Block.setAttribute("name", name);
+				}
+				if (size != "" && size != null && !size.isEmpty()) {
+					Block.setAttribute("size", size);
+				}
+				if (info != "" && info != null && !info.isEmpty()) {
+					Block.setAttribute("info", info);
+				}
+				if (info2 != "" && info2 != null && !info2.isEmpty()) {
+					Block.setAttribute("info2", info2);
+				}
+				if (info3 != "" && info3 != null && !info3.isEmpty()) {
+					Block.setAttribute("info3", info3);
+				}
+				if (info4 != "" && info4 != null && !info4.isEmpty()) {
+					Block.setAttribute("info4", info4);
+				}
+				metaDataIsBlock.put(metaDepthId, Block);
+				switch(metaDepthId.split("/").length) {
+				case 1: // depth가 1인 Block
+					media.appendChild(metaDataIsBlock.get(metaDepthId));
+					break;
+				default:
+					Integer index = metaDepthId.replaceAll("/$", "").lastIndexOf("/");
+					String previousMetaDepthId = metaDepthId.replaceAll("/$", "").substring(0, index+1);
+					metaDataIsBlock.get(previousMetaDepthId).appendChild(Block);
+					break;
+				}
+				break;
+			case "0": //Data
+				Element Data = document.createElement("data");
+				if (offset != "" && offset != null && !offset.isEmpty()) {
+					Data.setAttribute("offset", offset);
+				}
+				if (name != "" && name != null && !name.isEmpty()) {
+					Data.setAttribute("name", name);
+				}
+				if (size != "" && size != null && !size.isEmpty()) {
+					Data.setAttribute("size", size);
+				}
+				if (info != "" && info != null && !info.isEmpty()) {
+					Data.setAttribute("info", info);
+				}
+				if (info2 != "" && info2 != null && !info2.isEmpty()) {
+					Data.setAttribute("info2", info2);
+				}
+				if (info3 != "" && info3 != null && !info3.isEmpty()) {
+					Data.setAttribute("info3", info3);
+				}
+				if (info4 != "" && info4 != null && !info4.isEmpty()) {
+					Data.setAttribute("info4", info4);
+				}
+				if (value != "" && value != null && !value.isEmpty()) {
+					Data.setTextContent(value);
+				}
+				Integer index = metaDepthId.replaceAll("/$", "").lastIndexOf("/");
+				String previousMetaDepthId = metaDepthId.replaceAll("/$", "").substring(0, index+1);
+				metaDataIsBlock.get(previousMetaDepthId).appendChild(Data);
+				break;
 			}
-			if(meta_name != "" && meta_name != null) {
-				Block.setAttribute("name", meta_name);
-			}
-			if(Integer.toString(meta_size) != "" && Integer.toString(meta_size) != null) {
-				Block.setAttribute("size", Integer.toString(meta_size));
-			}
-			if(info1 != "" && info1 != null) {
-				Block.setAttribute("info", info1);
-			}
-			if(info2 != "" && info2 != null) {
-				Block.setAttribute("info2", info2);
-			}
-			if(info3 != "" && info3 != null) {
-				Block.setAttribute("info3", info3);
-			}
-			if(info4 != "" && info4 != null) {
-				Block.setAttribute("info", info4);
-			}
-			metaDataIsBlock.put(currentMetaDepthIdHistory, Block);
-			document.appendChild(metaDataIsBlock.get(currentMetaDepthIdHistory));
-			//System.out.println(metaDataIsBlock.get(currentMetaDepthIdHistory).getClass().getName());
-			break;
-		case 0: //Data
-			Element Data = document.createElement("data");
-			if(Integer.toString(offset) != "" && Integer.toString(offset) != null) {
-				Data.setAttribute("offset", Integer.toString(offset));
-			}
-			if(meta_name != "" && meta_name != null) {
-				Data.setAttribute("name", meta_name);
-			}
-			if(Integer.toString(meta_size) != "" && Integer.toString(meta_size) != null) {
-				Data.setAttribute("size", Integer.toString(meta_size));
-			}
-			if(info1 != "" && info1 != null) {
-				Data.setAttribute("info", info1);
-			}
-			if(info2 != "" && info2 != null) {
-				Data.setAttribute("info2", info2);
-			}
-			if(info3 != "" && info3 != null) {
-				Data.setAttribute("info3", info3);
-			}
-			if(info4 != "" && info4 != null) {
-				Data.setAttribute("info", info4);
-			}
-			if(value != "" && value != null) {
-				Data.setTextContent(value);
-			}
-			Integer index = currentMetaDepthIdHistory.replaceAll("/$", "").lastIndexOf("/");
-			String key = currentMetaDepthIdHistory.replaceAll("/$", "").substring(0, index+1);
-			//metaDataIsBlock.get(key).appendChild(Data);
-			break;
-		}
+		});
 		
 		// XML 문자열로 변환
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-
 		DOMSource source = new DOMSource(document);
 		StreamResult result = new StreamResult(out);
-
 		TransformerFactory transFactory = TransformerFactory.newInstance();
 		Transformer transformer = transFactory.newTransformer();
 
@@ -108,6 +144,9 @@ public class MetaDataParser {
 		// 들여 쓰기 있음
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		transformer.transform(source, result);
-		System.out.println(new String(out.toByteArray(), StandardCharsets.UTF_8));
+		
+		String MetaData2XML = new String(out.toByteArray(), StandardCharsets.UTF_8);
+		System.out.println(MetaData2XML);
+		return MetaData2XML;
 	}
 }

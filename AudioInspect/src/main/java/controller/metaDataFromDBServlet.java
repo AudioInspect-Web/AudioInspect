@@ -20,12 +20,13 @@ public class metaDataFromDBServlet extends HttpServlet {
 		String fileId = request.getParameter("fileId");
 		String fileType = request.getParameter("fileType");
 		try {
-			MetaDataDAO.getMetaDataID(fileId, fileType);
+			PrintWriter out = response.getWriter();
+			System.out.println(MetaDataDAO.getMetaDataID(fileId, fileType));
+			out.print(MetaDataDAO.getMetaDataID(fileId, fileType));
+			out.flush();
 		} catch (ParserConfigurationException | IOException | TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		PrintWriter out = response.getWriter();
 	}
 
 }
