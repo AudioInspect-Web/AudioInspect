@@ -31,36 +31,36 @@ function modal_view() {
                      <li class="menu"><i class="fa-duotone fa-play"></i><a>디바이스 제조사 설정</a>
                         <ul class="hide">
                            <li class = "select-text">검색할 제조사를 선택해주세요.</li>
-                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "manuAll">전체보기</li>
-                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Samsung" id = "nonck">Samsung</li>
-                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "LG" id = "nonck">LG</li>
-                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Apple" id = "nonck">Apple</li>
-                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Xiaomi" id = "nonck">샤오미</li>
-                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Huawei" id = "nonck">화웨이</li>
+                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "manuAll" onclick = "manuclick()">전체보기</li>
+                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Samsung" id = "nonck" onclick = "manuclick()">Samsung</li>
+                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "LG" id = "nonck" onclick = "manuclick()">LG</li>
+                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Apple" id = "nonck" onclick = "manuclick()">Apple</li>
+                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Xiaomi" id = "nonck" onclick = "manuclick()">샤오미</li>
+                           <li class = "select-list"><input type="checkbox" class ="manufacturerlist" name = "Huawei" id = "nonck" onclick = "manuclick()">화웨이</li>
                         </ul>
                      </li>
                      <li class="menu"><i class="fa-duotone fa-play"></i><a>원본/편집 설정</a>
                         <ul class="hide">
                            <li class = "select-text">표시할 파일의 원본/편집 여부를 선택해주세요.</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist" name = "editAll">전체 파일 보기</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist" name = "original" id = 'editnonck'>원본 파일만 보기</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist" name = "edit" id = 'editnonck'>편집 파일만 보기</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist" name = "editAll" onclick = "editclick()">전체 파일 보기</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist" name = "original" id = 'editnonck' onclick = "editclick()">원본 파일만 보기</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist" name = "edit" id = 'editnonck' onclick = "editclick()">편집 파일만 보기</li>
                            <hr>
                            <li class = "select-text">편집 소프트웨어 설정</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "editAll2">전체 보기</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "BuiltinSW" id = 'sweditnonck'>자체 탑제 소프트웨어 편집 본</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "editAll2" onclick = "editclick2()">전체 보기</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "BuiltinSW" id = 'sweditnonck' onclick = "editclick2()">자체 탑제 소프트웨어 편집 본</li>
                            <li class = "select-text">PC 기반 소프트웨어</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Gold wave" id = 'sweditnonck'>Gold wave</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Wave pad" id = 'sweditnonck'>Wave pad</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Audacity" id = 'sweditnonck'>Audacity</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Gold wave" id = 'sweditnonck' onclick = "editclick2()">Gold wave</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Wave pad" id = 'sweditnonck' onclick = "editclick2()">Wave pad</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Audacity" id = 'sweditnonck' onclick = "editclick2()">Audacity</li>
                            <li class = "select-text">안드로이드 기반 소프트웨어</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "302 lock screen" id = 'sweditnonck'>302 lock screen</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "inshot inc." id = 'sweditnonck'>inshot inc.</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Recorder & smart apps" id = 'sweditnonck'>Recorder & smart apps</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "302 lock screen" id = 'sweditnonck' onclick = "editclick2()">302 lock screen</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "inshot inc." id = 'sweditnonck' onclick = "editclick2()">inshot inc.</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Recorder & smart apps" id = 'sweditnonck' onclick = "editclick2()">Recorder & smart apps</li>
                            <li class = "select-text">iOS 기반 소프트웨어</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Garageband" id = 'sweditnonck'>Garageband</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Lexis Audio Editor" id = 'sweditnonck'>Lexis Audio Editor</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Wave pad mobile" id = 'sweditnonck'>Wave pad mobile</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Garageband" id = 'sweditnonck' onclick = "editclick2()">Garageband</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Lexis Audio Editor" id = 'sweditnonck' onclick = "editclick2()">Lexis Audio Editor</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Wave pad mobile" id = 'sweditnonck' onclick = "editclick2()">Wave pad mobile</li>
                         </ul>
                      </li>
                      <li class="menu"><i class="fa-duotone fa-play"></i><a>검색 키워드 설정</a>
@@ -72,18 +72,18 @@ function modal_view() {
                            <li class = "select-list"><input type="button" class = "search_button" value="검색 키워드 적용"></li>
                            <hr>
                            <li class = "select-text">검색 옵션</li>
-                           <li class = "select-list"><input type="checkbox" class ="text_search" name = "file_name">파일 이름으로 검색</li>
-                           <li class = "select-list"><input type="checkbox" class ="text_search" name = "record_device">녹음 모델명으로 검색</li>
-                           <li class = "select-list"><input type="checkbox" class ="text_search" name = "record_device_num">녹음 모델 넘버로 검색</li>
+                           <li class = "select-list"><input type="checkbox" class ="text_search" name = "file_name" id = "file_name" onclick = "textclick()">파일 이름으로 검색</li>
+                           <li class = "select-list"><input type="checkbox" class ="text_search" name = "record_device" id = "record_device" onclick = "textclick()">녹음 모델명으로 검색</li>
+                           <li class = "select-list"><input type="checkbox" class ="text_search" name = "record_device_num" id = "record_device_num" onclick = "textclick()">녹음 모델 넘버로 검색</li>
                         </ul>
                      </li>
                      <li class="menu"><i class="fa-duotone fa-play"></i><a>OS 설정</a>
                         <ul class="hide">
                            <li class = "select-text">OS 종류</li>
                            <li class = "select-text">디바이스 제조사 선택 시 OS 종류는 자동으로 선택됩니다.</li>
-                           <li class = "select-list"><input type="checkbox" class ="OSlist" name = "OSAll">전체 보기</li>
-                           <li class = "select-list"><input type="checkbox" class ="OSlist" name = "Android" id = "OSnonck">Android</li>
-                           <li class = "select-list"><input type="checkbox" class ="OSlist" name = "iOS" id = "OSnonck">iOS</li>
+                           <li class = "select-list"><input type="checkbox" class ="OSlist" name = "OSAll" onclick = "searchclick()">전체 보기</li>
+                           <li class = "select-list"><input type="checkbox" class ="OSlist" name = "Android" id = "OSnonck"  onclick = "searchclick()">Android</li>
+                           <li class = "select-list"><input type="checkbox" class ="OSlist" name = "iOS" id = "OSnonck"  onclick = "searchclick()">iOS</li>
                            <hr>
                            <li class = "select-text">OS 버전</li>
                            <li class = "select-text">현재 검색 결과에 나타나는 버전만 출력됩니다.</li>
@@ -140,10 +140,10 @@ function modal_view() {
                      </li>
                      <li class="menu"><i class="fa-duotone fa-play"></i><a>녹음 모드 선택</a>
                         <ul class="hide">
-                           <li class = "select-list"><input type="checkbox" class = "recordlist" name = "recordAll">전체 보기</li>
+                           <li class = "select-list"><input type="checkbox" class = "recordlist" name = "recordAll" onclick = "recordclick()">전체 보기</li>
                            <hr>
                            <li class = "select-list">녹음 모드
-                           <select class = "recordmode">
+                           <select class = "recordmode" onclick = "recordmode()">
                            <option value = "recordmode_All">전체보기</option>
                            <option value = "음악">음악</option>
                            <option value = "대화">대화</option>
@@ -168,7 +168,7 @@ function modal_view() {
                            <option value = "기본(북마크 포함)">기본(북마크 포함)</option>
                            </select></li>
                            <li class = "select-list">녹음 퀄리티
-                           <select class = "recordQ">
+                           <select class = "recordQ" onclick = "recordQ()">
                            <option value = "recordQ_All">전체보기</option>
                            <option value = "고품질">고품질</option>
                            <option value = "보통(~100kbit&s, ~45MB&h)">보통(~100kbit&s, ~45MB&h)</option>
@@ -247,35 +247,11 @@ function modal_view() {
 		getFileListFromDB(initQueryForOriginal)
 		getFileListFromDB(initQueryForEdited)
 		//체크박스 확인
-		$(".manufacturerlist").click(function() {
-			manuclick()
-		})
-		$(".editlist").click(function() {
-			editclick()
-		})
-		$(".editlist2").click(function() {
-			editclick2()
-		})
 		$(".OSlist").click(function() {
 			OSclick()
 		})
 		$(".selectOS").change(function(){
 			OS_number()
-		})
-		$(".searchlist").click(function() {
-			searchclick()
-		})
-		$(".text_search").click(function() {
-			textclick()
-		})
-		$(".recordlist").click(function() {
-			recordclick()
-		})
-		$(".recordmode").change(function(){
-			recordmode()
-		})
-		$(".recordQ").change(function(){
-			recordQ()
 		})
 		//체크박스 체크 초기화
 		$(".selectdelete").click(function() {
