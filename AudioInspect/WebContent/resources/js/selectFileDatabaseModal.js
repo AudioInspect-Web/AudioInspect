@@ -265,7 +265,7 @@ function submit() {
 		//MetaData.js에서 MetaDataFromDB() 호출
 		case "standard":
 			standard_addFile("DB", beSelectedFileForStandard)
-			MetaDataFromDB(beSelectedFileForStandard[0].fileId, beSelectedFileForStandard[0].fileType)
+			MetaDataFromDB("standard", beSelectedFileForStandard[0].fileId, beSelectedFileForStandard[0].fileType)
 			break
 		case "compare":
 			compare_addFile("DB", beSelectedFileForCompare)

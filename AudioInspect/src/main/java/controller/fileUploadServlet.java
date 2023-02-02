@@ -40,6 +40,7 @@ public class fileUploadServlet extends HttpServlet {
 				result.add(fileName);
 				result.add(MediaInfo.getXMLString("C:\\AudioInspect\\"+fileName));
 				//String result=MediaInfo.getXMLString("C:\\AudioInspect\\"+fileName);
+				System.out.println(result);
 				out.print(result);
 				out.flush();
 			}

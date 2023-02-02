@@ -18,6 +18,7 @@ function StandMetaData(file) {
 		processData: false,
 		complete: function(data) {
 			dataList = data.responseText.replaceAll("[", "").replaceAll("]", "").split(",")
+			console.log(dataList)
 			getStandMetaDataTreeFromXML(dataList[1])
 			//standardfilesData.metaData: fileManage.js에서 호출
 			standardfilesData.metaData.push(dataList[1])
@@ -65,7 +66,7 @@ function CompMetaData(file) {
 	})
 }
 
-function MetaDataFromDB(selectedFileId, selectedFileType) {
+function MetaDataFromDB(standOrCompare, selectedFileId, selectedFileType) {
 	$.ajax({
 		method: "POST",
 		url: '/metaDataFromDBServlet; charset=utf-8',
@@ -75,7 +76,14 @@ function MetaDataFromDB(selectedFileId, selectedFileType) {
 			fileType: selectedFileType
 		},
 		complete: function(data) {
-			console.log(data)
+			data = data.responseText
+			switch(standOrCompare){
+				case "standard":
+					getStandMetaDataTreeFromXML(data)
+					break
+				case "compare":
+					break				
+			}
 		},
 		error: function(request, status, error) {
 			console.log(request.responseText);
@@ -92,6 +100,7 @@ function getStandMetaDataTreeFromXML(xml) {
 	var comparemethod = document.querySelector(".compare_button.current").value
 	switch (comparemethod) {
 		case "XML":
+			var standardfile = ""
 			var result = ""
 			var block_info = []
 			var data_info = []

@@ -146,7 +146,7 @@ public class MetaDataParser {
 		transformer.transform(source, result);
 		
 		String MetaData2XML = new String(out.toByteArray(), StandardCharsets.UTF_8);
-		System.out.println(MetaData2XML);
+		//System.out.println(MetaData2XML);
 		return MetaData2XML;
 	}
 }
