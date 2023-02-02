@@ -33,7 +33,7 @@ function manuclick() {
 	var resultarr_2 = [];
 	$(".result_list").empty();
 	// 선택된 목록 가져오기
-	const query = 'input[class="manufacturerlist"]:checked';
+	const query = 'input[type="checkbox"]:checked';
 	const selectedEls = document.querySelectorAll(query);
 	// 선택된 목록에서 value 찾기
 	let result = "";
@@ -45,30 +45,132 @@ function manuclick() {
 		resultarr_2.push(result2)
 	});
 	for (var i = 0; i < resultarr.length; i++) {
-		if (resultarr[i] == "manuAll") {
-			getFileListFromDB(initQueryForOriginal)
-			getFileListFromDB(initQueryForEdited)
-			//manuArr.push("")
-			//allSelect()
-			$("input[id = 'nonck']").prop("checked", false);
-		} else {
+		if (resultarr_2[i] == "manufacturerlist") {
 			if (resultarr[i] == "manuAll") {
-				resultarr.splice(0)
+				//getFileListFromDB(initQueryForOriginal)
+				//getFileListFromDB(initQueryForEdited)
+				$("input[id = 'nonck']").prop("checked", false);
+			} else {
+				if (resultarr[i] == "manuAll") {
+					resultarr.splice(0)
+				}
+				selectmanufacturer = " and sf.recording_app_manufacturer='" + resultarr[i] + "'";
+				selectmanufacturer2 = " and esf.editing_app_manufacturer='" + resultarr[i] + "'";
+				//getFileListFromDB(selectmanufacturer)
+				//getFileListFromDB(selectmanufacturer2)
+				$("input[name = 'manuAll']").prop("checked", false);
 			}
-			/*selectmanufacturer = " and sf.recording_app_manufacturer='" + resultarr[i] + "'";
-			manuArr.push(selectmanufacturer)
-			selectmanufacturer2 = " and esf.editing_app_manufacturer='" + resultarr[i] + "'";
-			allSelect()*/
-			selectmanufacturer = initQueryForOriginal + " and sf.recording_app_manufacturer='" + resultarr[i] + "'";
-			selectmanufacturer2 = initQueryForEdited + " and esf.editing_app_manufacturer='" + resultarr[i] + "'";
-			getFileListFromDB(selectmanufacturer)
-			getFileListFromDB(selectmanufacturer2)
-			$("input[name = 'manuAll']").prop("checked", false);
+		}
+		if (resultarr_2[i] == "editlist") {
+			if (resultarr[i] == "editAll") {
+				$("input[id = 'editnonck']").prop("checked", false);
+				//getFileListFromDB(initQueryForOriginal)
+				//getFileListFromDB(initQueryForEdited)
+			} if (resultarr[i] == "original") {
+				$("input[name='editAll']").prop("checked", false);
+				//getFileListFromDB(initQueryForOriginal)
+			} if (resultarr[i] == "edit") {
+				$("input[name='editAll']").prop("checked", false);
+				//getFileListFromDB(initQueryForEdited)
+			}
+			else {
+				$(".result_list").empty();
+				selectEdit = " and esf.editing_app_name='" + resultarr[i] + "'";
+				//getFileListFromDB(selectEdit)
+			}
+		}
+		if (resultarr_2[i] == "editlist2") {
+			if (resultarr[i] == "editAll2") {
+				$("input[id = 'sweditnonck']").prop("checked", false);
+				//getFileListFromDB(initQueryForEdited)
+			}
+			else {
+				$(".result_list").empty();
+				$("input[name='editAll2']").prop("checked", false);
+				selectEdit2 = " and esf.editing_app_name='" + resultarr[i] + "'";
+				//getFileListFromDB(selectEdit2)
+			}
+		}
+		if (resultarr_2[i] == "OSlist") {
+			if (resultarr[i] == "OSAll") {
+				if ($(".input_OS").is(":checked") == true) {
+					$("input[class='input_OS']").prop("checked", false);
+				}
+				if ($(".select_OS").is(":checked") == true) {
+					$("input[class='select_OS']").prop("checked", false);
+				}
+				$("input[id='OSnonck']").prop("checked", false);
+				//getFileListFromDB(initQueryForOriginal)
+				//getFileListFromDB(initQueryForEdited)
+			} else {
+				$("input[name='OSAll']").prop("checked", false);
+				selectOS = " and osd.os_name='" + resultarr[i] + "'";
+				selectOS2 = " and osd.os_name='" + resultarr[i] + "'";
+				//getFileListFromDB(selectOS)
+				//getFileListFromDB(selectOS2)
+			}
+		}
+		if (resultarr_2[i] == "text_search") {
+			if (resultarr[i] == "file_name") {
+				$("input[name='record_device']").prop("checked", false);
+				$("input[name='record_device_num']").prop("checked", false);
+				$(".search_button").click(function() {
+					$(".result_list").empty();
+					var search = $(".search_text").val();
+					search_file_name = " and sf.file_name like'%" + search + "%'";
+					search_file_name2 = " and esf.file_name like'%" + search + "%'";
+					//getFileListFromDB(search_file_name)
+					//getFileListFromDB(search_file_name2)
+
+				})
+			}
+			if (resultarr[i] == "record_device") {
+				$("input[name='file_name']").prop("checked", false);
+				$("input[name='record_device_num']").prop("checked", false);
+				$(".search_button").click(function() {
+					$(".result_list").empty();
+					var search = $(".search_text").val();
+					search_model_name = " and sd.smart_device_model_name like'%" + search + "%'";
+					search_model_name2 = " and sd.smart_device_model_name like'%" + search + "%'";
+					//getFileListFromDB(search_model_name)
+					//getFileListFromDB(search_model_name2)
+
+				})
+			}
+			if (resultarr[i] == "record_device_num") {
+				$("input[name='file_name']").prop("checked", false);
+				$("input[name='record_device']").prop("checked", false);
+				$(".search_button").click(function() {
+					$(".result_list").empty();
+					var search = $(".search_text").val();
+					search_model_number = " and sd.smart_device_model_number like'%" + search + "%'";
+					search_model_number2 = " and sd.smart_device_model_number like'%" + search + "%'";
+					//getFileListFromDB(search_model_number)
+					//getFileListFromDB(search_model_number2)
+
+				})
+			}
+		}
+		if (resultarr[i].includes("All")) {
+			$(".result_list").empty();
+			console.log("All")
+			//getFileListFromDB(initQueryForOriginal)
+			//getFileListFromDB(initQueryForEdited)
+		}
+		if (resultarr[i].includes("original")) {
+			$(".result_list").empty();
+			console.log("original")
+			//getFileListFromDB(initQueryForOriginal)
+		}
+		if (resultarr[i].includes("edit")) {
+			$(".result_list").empty();
+			console.log("edit")
+			//getFileListFromDB(initQueryForEdited)
 		}
 	}
 }
 
-
+/*
 function editclick() {
 	var resultarr2 = [];
 	$("input[name='editAll2']").prop("checked", false);
@@ -159,7 +261,7 @@ function OSclick() {
 			getFileListFromDB(selectOS2)
 		}
 	}
-}
+}*/
 function OS_number() {
 	$(".result_list").empty();
 	if ($(".input_OS").is(":checked") == true) {
@@ -199,6 +301,7 @@ function OS_number2() {
 	getFileListFromDB(select_Android4)
 }
 
+/*
 function searchclick() {
 	$(".result_list").empty();
 	const query = 'input[class="searchlist"]:checked';
@@ -224,7 +327,8 @@ function searchclick() {
 			getFileListFromDB(initQueryForEdited)
 		}
 	}
-}
+}*/
+/*
 function textclick() {
 	const query = 'input[class="text_search"]:checked';
 	const selectedEls = document.querySelectorAll(query);
@@ -276,7 +380,8 @@ function textclick() {
 		}
 	}
 
-}
+}*/
+
 function recordclick() {
 	$(".result_list").empty();
 	const query = 'input[class="recordlist"]:checked';
@@ -290,6 +395,7 @@ function recordclick() {
 		getFileListFromDB(initQueryForEdited)
 	}
 }
+
 function recordmode() {
 	$(".result_list").empty();
 	var mode = $(".recordmode").val();
@@ -316,6 +422,7 @@ function recordQ() {
 		getFileListFromDB(select_recordQ2)
 	}
 }
+
 
 /*
 function allSelect() {
