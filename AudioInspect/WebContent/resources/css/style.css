@@ -388,14 +388,13 @@ ul.compare_tabs li:hover {
 	text-align: center;
 }
 
-#fileLocationButtons input:hover, #fileLocationButtons label:hover
-	{
+#fileLocationButtons input:hover, #fileLocationButtons label:hover {
 	background-color: #ccc;;
 }
 
 /* selectFileDatabase Modal Window */
 .top {
-	width:100%;
+	width: 100%;
 	padding-top: 1%;
 	margin: 0%;
 	height: 1.5em;
@@ -447,23 +446,20 @@ ul.compare_tabs li:hover {
 	overflow: auto;
 }
 
-
 .result-div {
 	height: 45%;
 	overflow: auto;
 }
 
-
-
 .menu a {
 	cursor: pointer;
 	font-weight: bold;
 	font-size: 1.3em;
-	margin-left:1.0em;
+	margin-left: 1.0em;
 }
 
 .menu .hide {
-	columns:2;
+	columns: 2;
 	display: none;
 }
 
@@ -472,8 +468,9 @@ ul.compare_tabs li:hover {
 	font-weight: bold;
 	font-size: 1.3em;
 }
-input[type=checkbox]{
-	zoom:1.5;
+
+input[type=checkbox] {
+	zoom: 1.5;
 }
 
 ul {
@@ -481,7 +478,7 @@ ul {
 }
 
 .select-list {
-	margin:0;
+	margin: 0;
 	font-size: 1.2em;
 	padding: 4px;
 }
@@ -518,6 +515,18 @@ ul {
 	background-color: rgb(233, 233, 233);
 }
 
+.search {
+	margin-left: 6%;
+	width: 50%;
+	background-color: white;
+	height: 32px;
+	border: 0;
+	border-radius: 13px;
+	outline: none;
+	font-size: 1.0em;
+	background-color: rgb(233, 233, 233);
+}
+
 .search_button {
 	background-color: lightgray;
 	border: none;
@@ -528,4 +537,25 @@ ul {
 
 .search_button:hover {
 	background-color: gray;
+}
+
+.selectOS {
+	margin-left: 3%;
+	height: 32px;
+	width: 50%;
+	font-size: 1.0em;
+}
+
+.recordQ {
+	margin-left: 3%;
+	height: 32px;
+	width: 50%;
+	font-size: 1.0em;
+}
+
+.recordmode {
+	margin-left: 5%;
+	height: 32px;
+	width: 50%;
+	font-size: 1.0em;
 }

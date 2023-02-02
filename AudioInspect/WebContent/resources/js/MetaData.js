@@ -18,7 +18,7 @@ function StandMetaData(file) {
 		processData: false,
 		complete: function(data) {
 			dataList = data.responseText.replaceAll("[", "").replaceAll("]", "").split(",")
-			console.log(dataList)
+			console.log(dataList[1])
 			getStandMetaDataTreeFromXML(dataList[1])
 			//standardfilesData.metaData: fileManage.js에서 호출
 			standardfilesData.metaData.push(dataList[1])
@@ -77,6 +77,7 @@ function MetaDataFromDB(standOrCompare, selectedFileId, selectedFileType) {
 		},
 		complete: function(data) {
 			data = data.responseText
+			console.log(data)
 			switch(standOrCompare){
 				case "standard":
 					getStandMetaDataTreeFromXML(data)
