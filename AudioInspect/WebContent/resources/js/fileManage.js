@@ -12,6 +12,9 @@ function standard_addFile(fileLocation, files) {
 	} else {
 		switch (fileLocation) {
 			case "DB":
+				//standardfilesArr 오류
+				standardfilesArr.push(files)
+				standardfilesData.fileName.push(files[0].fileName)
 				$('.standard_name').append(files[0].fileName)
 				$('.standard_size').append(files[0].fileSize)
 				$('.standard_fileType').append(files[0].fileType)
@@ -134,6 +137,9 @@ function compare_addFile(fileLocation, files) {
 			switch (fileLocation) {
 				case "DB":
 					if (compare_checkDuplicate(file.fileName)) {
+						//comparefilesArr 오류
+						comparefilesArr.push(file)
+						comparefilesData.fileName.push(file.fileName)
 						$(".removetr").remove();
 						if (file.fileName == files[files.length - 1].fileName) {
 							var compare_infos = '<tr name = "trStaff" class = "trline" id = "trline">'

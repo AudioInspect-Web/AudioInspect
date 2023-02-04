@@ -25,6 +25,7 @@ public class MetaDataParser {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 		Document document = documentBuilder.newDocument();
+		document.setXmlStandalone(true);
 		
 		// 최상위 root 생성
 		Element root = document.createElement("Root");

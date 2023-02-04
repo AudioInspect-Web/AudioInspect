@@ -348,10 +348,13 @@ function submit() {
 		//MetaData.js에서 MetaDataFromDB() 호출
 		case "standard":
 			standard_addFile("DB", beSelectedFileForStandard)
-			MetaDataFromDB("standard", beSelectedFileForStandard[0].fileId, beSelectedFileForStandard[0].fileType)
+			MetaDataFromDB("standard", beSelectedFileForStandard[0].fileName, beSelectedFileForStandard[0].fileId, beSelectedFileForStandard[0].fileType)
 			break
 		case "compare":
 			compare_addFile("DB", beSelectedFileForCompare)
+			for (var i = 0; i < beSelectedFileForCompare.length; i++) {
+				MetaDataFromDB("compare", beSelectedFileForCompare[i].fileName, beSelectedFileForCompare[i].fileId, beSelectedFileForCompare[i].fileType)
+			}
 			break
 	}
 }

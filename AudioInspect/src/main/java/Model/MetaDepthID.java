@@ -73,10 +73,10 @@ public class MetaDepthID {
 			break;
 		case 2:
 			for(int i = 0; i<meta_depth1_id.size() ; i++) {
-				if (i != 0) {
-					query = "where meta_data_id =" + meta_data_id + " and " + fileType + "_meta_depth1_id =" + meta_depth1_id.get(i).replace("/", "");
+				if (i == 0) {
+					query += "where meta_data_id =" + meta_data_id + " and " + fileType + "_meta_depth1_id =" + meta_depth1_id.get(i).replace("/", "");
 				} else {
-					query = " or where meta_data_id =" + meta_data_id + " and " + fileType + "_meta_depth1_id =" + meta_depth1_id.get(i).replace("/", "");
+					query += " or meta_data_id =" + meta_data_id + " and " + fileType + "_meta_depth1_id =" + meta_depth1_id.get(i).replace("/", "");
 				}
 			}
 			break;
