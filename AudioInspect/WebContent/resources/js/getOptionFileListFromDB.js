@@ -102,7 +102,7 @@ function manuclick() {
 				$("input[name='selectorigin']").prop("checked", false);
 				$(".result_list").empty();
 				$("input[name='selectedit']").prop("checked", false);
-				selectEdit2[i-selectmanufacturer2.length] = " and esf.editing_app_name like'%" + resultarr[i] + "%'";
+				selectEdit2[i - selectmanufacturer2.length] = " and esf.editing_app_name like'%" + resultarr[i] + "%'";
 			}
 		}
 		if (resultarr_2[i] == "OSlist") {
@@ -157,8 +157,8 @@ function manuclick() {
 				search_model_name2 = "";
 			}
 		}
-		var origin = "";
-		var edited = "";
+		var origin = [];
+		var edited = [];
 		if (resultarr_2[i].includes("edit")) {
 			if (resultarr[i].includes("All")) {
 				$(".result_list").empty();
@@ -169,31 +169,42 @@ function manuclick() {
 			}
 			if (resultarr[i].includes("origin")) {
 				$(".result_list").empty();
-				origin = initQueryForOriginal + record + selectmanufacturer + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
+				for (var n = 0; n < selectmanufacturer.length; n++) {
+					origin[n] = initQueryForOriginal + record + selectmanufacturer[n] + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
+				}
 				edit = "";
 			}
 			else {
 				$(".result_list").empty();
-				edited = initQueryForEdited + record2 + selectmanufacturer2 + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+				for (var n = 0; n < selectmanufacturer2.length; n++) {
+					edited[n] = initQueryForOriginal + record + selectmanufacturer2[n] + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
+				}
 				origin = ""
 			}
 		}
 		else {
 			if (resultarr[i].includes("original")) {
 				$(".result_list").empty();
-				origin = initQueryForOriginal + record + selectmanufacturer + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
+				for (var n = 0; n < selectmanufacturer.length; n++) {
+					origin[n] = initQueryForOriginal + record + selectmanufacturer[n] + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
+				}
 				edit = "";
 			}
 			else {
 				$(".result_list").empty();
-				origin = initQueryForOriginal + record + selectmanufacturer + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
-				edited = initQueryForEdited + record2 + selectmanufacturer2 + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+				for (var n = 0; n < selectmanufacturer.length; n++) {
+					origin[n] = initQueryForOriginal + record + selectmanufacturer[n] + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
+				}
+				for (var n = 0; n < selectmanufacturer2.length; n++) {
+					edited[n] = initQueryForOriginal + record + selectmanufacturer2[n] + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
+				}
 			}
 		}
 	}
-	console.log(origin)
-	getFileListFromDB(origin);
-	getFileListFromDB(edited);
+	for (var n = 0; n < selectmanufacturer.length; n++) {
+		getFileListFromDB(origin[n]);
+		getFileListFromDB(edited[n]);
+	}
 }
 
 function OS_number() {
