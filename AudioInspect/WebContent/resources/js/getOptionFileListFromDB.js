@@ -170,12 +170,12 @@ function manuclick() {
 		if (resultarr_2[i].includes("edit")) {
 			if (resultarr[i].includes("All")) {
 				$(".result_list").empty();
-				origin = initQueryForOriginal;
-				edited = initQueryForEdited;
-				getFileListFromDB(origin)
-				getFileListFromDB(edited)
+				origin[0] = initQueryForOriginal;
+				edited[0] = initQueryForEdited;
+				getFileListFromDB(origin[0])
+				getFileListFromDB(edited[0])
 			}
-			/*else if (resultarr[i].includes("origin")) {
+			else if (resultarr[i].includes("origin")) {
 				$(".result_list").empty();
 				if (selectmanufacturer.length > 0) {
 					for (var n = 0; n < selectmanufacturer.length; n++) {
@@ -186,7 +186,7 @@ function manuclick() {
 					origin[0] = initQueryForOriginal + record + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
 				}
 				edit = "";
-			}*/
+			}
 			else {
 				$(".result_list").empty();
 				if (selectmanufacturer2.length > 0) {
@@ -255,7 +255,7 @@ function manuclick() {
 						}
 					}
 				}
-				origin = "";
+				//origin = "";
 				//origin = initQueryForOriginal + record + selectmanufacturer + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
 				//edited = initQueryForEdited + record2 + selectmanufacturer2 + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
 			}
