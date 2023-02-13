@@ -449,7 +449,7 @@ ul.compare_tabs li:hover {
 
 
 .result-div {
-	height: 45%;
+	height: 45%;    
 	overflow: auto;
 }
 
