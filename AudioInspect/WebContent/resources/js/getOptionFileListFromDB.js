@@ -43,6 +43,7 @@ function manuclick() {
 	resultarr_2 = [];
 	resultarr_3 = [];
 	resultarr_4 = [];
+	resultarr_5 = [];
 	// 선택된 목록 가져오기
 	const query = 'input[type="checkbox"]:checked';
 	const selectedEls = document.querySelectorAll(query);
@@ -62,7 +63,7 @@ function manuclick() {
 			resultarr_4.push(" and sf.recording_app_manufacturer='" + result + "'")
 		}
 		result4 = el.className + '';
-		if(result4 == "editlist2"){
+		if (result4 == "editlist2") {
 			resultarr_5.push(" and esf.editing_app_name like'%" + result + "%'")
 		}
 	});
@@ -108,7 +109,8 @@ function manuclick() {
 				$("input[name='selectorigin']").prop("checked", false);
 				$(".result_list").empty();
 				$("input[name='selectedit']").prop("checked", false);
-				selectEdit2[i - selectmanufacturer2.length] = resultarr_5[i]
+				//selectEdit2[i - selectmanufacturer2.length] = resultarr_5[i]
+				resultarr_5[i] = resultarr_5[i]
 			}
 		}
 		if (resultarr_2[i] == "OSlist") {
@@ -188,19 +190,30 @@ function manuclick() {
 			else {
 				$(".result_list").empty();
 				if (selectmanufacturer2.length > 0) {
-					for (var n = 0; n < selectmanufacturer2.length; n++) {
-						edited[n] = initQueryForEdited + record2 + selectmanufacturer2[n] + selectEdit2[0] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+					for (var n = 1; n < selectmanufacturer2.length + 1; n++) {
+						if (resultarr_5.length > 0) {
+							for (var m = 1; m < resultarr_5.length + 1; m++) {
+								edited[n * m] = edited[n - 1] + resultarr_5[m - 1]
+							}
+						}
+						else {
+							edited[n - 1] = initQueryForEdited + record2 + selectmanufacturer2[n - 1] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+						}
 					}
 				}
 				else {
-					edited[0] = initQueryForEdited + record2 + selectEdit2[0] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+					var EditedQ = initQueryForEdited + record2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+					if (resultarr_5.length > 0) {
+						for (var m = 0; m < resultarr_5.length; m++) {
+							edited[m] = EditedQ + resultarr_5[m]
+						}
+					}
 				}
-				//edited = initQueryForEdited + record2 + selectmanufacturer2 + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
 				origin = ""
 			}
 		}
 		else {
-			if (resultarr[i].includes("original")) {
+			if (resultarr[i].includes("origin")) {
 				$(".result_list").empty();
 				if (selectmanufacturer.length > 0) {
 					for (var n = 0; n < selectmanufacturer.length; n++) {
@@ -210,7 +223,6 @@ function manuclick() {
 				else {
 					origin[0] = initQueryForOriginal + record + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
 				}
-				//origin = initQueryForOriginal + record + selectmanufacturer + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
 				edit = "";
 			}
 			else {
@@ -224,12 +236,24 @@ function manuclick() {
 					origin[0] = initQueryForOriginal + record + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
 				}
 				if (selectmanufacturer2.length > 0) {
-					for (var n = 0; n < selectmanufacturer2.length; n++) {
-						edited[n] = initQueryForEdited + record2 + selectmanufacturer2[n] + selectEdit2[0] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+					for (var n = 1; n < selectmanufacturer2.length + 1; n++) {
+						if (resultarr_5.length > 0) {
+							for (var m = 1; m < resultarr_5.length + 1; m++) {
+								edited[n * m] = edited[n - 1] + resultarr_5[m - 1]
+							}
+						}
+						else {
+							edited[n - 1] = initQueryForEdited + record2 + selectmanufacturer2[n - 1] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+						}
 					}
 				}
 				else {
-					edited[0] = initQueryForEdited + record2 + selectEdit2[0] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+					var EditedQ = initQueryForEdited + record2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+					if (resultarr_5.length > 0) {
+						for (var m = 0; m < resultarr_5.length; m++) {
+							edited[m] = EditedQ + resultarr_5[m]
+						}
+					}
 				}
 				//origin = initQueryForOriginal + record + selectmanufacturer + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
 				//edited = initQueryForEdited + record2 + selectmanufacturer2 + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
@@ -245,7 +269,6 @@ function manuclick() {
 }
 
 function OS_number() {
-	$(".result_list").empty();
 	if ($(".input_OS").is(":checked") == true) {
 		$("input[class='input_OS']").prop("checked", false);
 	}
@@ -272,7 +295,6 @@ function OS_number() {
 	manuclick();
 }
 function OS_number2() {
-	$(".result_list").empty();
 	if ($(".input_OS").is(":checked") == false) {
 		$("input[class='input_OS']").prop("checked", true);
 	}
@@ -292,7 +314,6 @@ function OS_number2() {
 
 
 function recordclick() {
-	$(".result_list").empty();
 	const query = 'input[class="recordlist"]:checked';
 	const selectedEls = document.querySelectorAll(query);
 	let result = '';
@@ -366,6 +387,7 @@ function deleteclick() {
 	$(".search").val("")
 	$(".recordmode").val("recordmode_All")
 	$(".recordQ").val("recordQ_All")
+	$(".search_text").val("")
 	selectEdit = "";
 	selectEdit2 = [];
 	selectOS = "";
