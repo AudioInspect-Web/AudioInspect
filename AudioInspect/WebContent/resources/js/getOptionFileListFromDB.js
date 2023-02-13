@@ -30,14 +30,19 @@ var select_iOS = "";
 var select_iOS2 = "";
 var OSArr = [];
 var manuArr = [];
+var resultarr = [];
+var resultarr_2 = [];
+var resultarr_3 = [];
+var resultarr_4 = [];
+var resultarr_5 = [];
 
 
 function manuclick() {
-	var resultarr = [];
-	var resultarr_2 = [];
-	var resultarr_3 = [];
-	var resultarr_4 = [];
 	$(".result_list").empty();
+	resultarr = [];
+	resultarr_2 = [];
+	resultarr_3 = [];
+	resultarr_4 = [];
 	// 선택된 목록 가져오기
 	const query = 'input[type="checkbox"]:checked';
 	const selectedEls = document.querySelectorAll(query);
@@ -53,11 +58,12 @@ function manuclick() {
 		resultarr_2.push(result2)
 		result3 = el.className + '';
 		if (result3 == "manufacturerlist") {
-			resultarr_3.push(result3)
+			resultarr_3.push(" and sf.recording_app_manufacturer='" + result + "'")
+			resultarr_4.push(" and sf.recording_app_manufacturer='" + result + "'")
 		}
 		result4 = el.className + '';
-		if (result4 == "editlist2") {
-			resultarr_4.push(result4)
+		if(result4 == "editlist2"){
+			resultarr_5.push(" and esf.editing_app_name like'%" + result + "%'")
 		}
 	});
 	for (var i = 0; i < resultarr.length; i++) {
@@ -68,8 +74,8 @@ function manuclick() {
 				if (resultarr[i] == "manuAll") {
 					resultarr.splice(0)
 				}
-				selectmanufacturer[i] = " and sf.recording_app_manufacturer='" + resultarr[i] + "'";
-				selectmanufacturer2[i] = " and esf.editing_app_manufacturer='" + resultarr[i] + "'";
+				selectmanufacturer[i] = resultarr_3[i]
+				selectmanufacturer2[i] = resultarr_4[i]
 				$("input[name = 'manuAll']").prop("checked", false);
 			}
 		}
@@ -102,7 +108,7 @@ function manuclick() {
 				$("input[name='selectorigin']").prop("checked", false);
 				$(".result_list").empty();
 				$("input[name='selectedit']").prop("checked", false);
-				selectEdit2[i - selectmanufacturer2.length] = " and esf.editing_app_name like'%" + resultarr[i] + "%'";
+				selectEdit2[i - selectmanufacturer2.length] = resultarr_5[i]
 			}
 		}
 		if (resultarr_2[i] == "OSlist") {
@@ -183,11 +189,11 @@ function manuclick() {
 				$(".result_list").empty();
 				if (selectmanufacturer2.length > 0) {
 					for (var n = 0; n < selectmanufacturer2.length; n++) {
-						edited[n] = initQueryForEdited + record2 + selectmanufacturer2[n] + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+						edited[n] = initQueryForEdited + record2 + selectmanufacturer2[n] + selectEdit2[0] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
 					}
 				}
 				else {
-					edited[0] = initQueryForEdited + record2 + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+					edited[0] = initQueryForEdited + record2 + selectEdit2[0] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
 				}
 				//edited = initQueryForEdited + record2 + selectmanufacturer2 + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
 				origin = ""
@@ -202,7 +208,7 @@ function manuclick() {
 					}
 				}
 				else {
-					origin[0] = initQueryForOriginal + record  + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
+					origin[0] = initQueryForOriginal + record + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
 				}
 				//origin = initQueryForOriginal + record + selectmanufacturer + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
 				edit = "";
@@ -219,26 +225,22 @@ function manuclick() {
 				}
 				if (selectmanufacturer2.length > 0) {
 					for (var n = 0; n < selectmanufacturer2.length; n++) {
-						edited[n] = initQueryForEdited + record2 + selectmanufacturer2[n] + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+						edited[n] = initQueryForEdited + record2 + selectmanufacturer2[n] + selectEdit2[0] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
 					}
 				}
 				else {
-					edited[0] = initQueryForEdited + record2 + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
+					edited[0] = initQueryForEdited + record2 + selectEdit2[0] + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
 				}
 				//origin = initQueryForOriginal + record + selectmanufacturer + selectEdit2 + selectOS + search_file_name + search_model_name + search_model_number + select_Android + select_Android3 + select_iOS;
 				//edited = initQueryForEdited + record2 + selectmanufacturer2 + selectEdit2 + selectOS2 + search_file_name2 + search_model_name2 + search_model_number2 + select_Android2 + select_Android4 + select_iOS2;
 			}
 		}
 	}
-	if (selectmanufacturer.length > 0) {
-		for (var n = 0; n < selectmanufacturer.length; n++) {
-			getFileListFromDB(origin[n]);
-			getFileListFromDB(edited[n]);
-		}
+	for (var i = 0; i < origin.length; i++) {
+		getFileListFromDB(origin[i]);
 	}
-	else {
-		getFileListFromDB(origin[0]);
-		getFileListFromDB(edited[0]);
+	for (var j = 0; j < edited.length; j++) {
+		getFileListFromDB(edited[j]);
 	}
 }
 
@@ -359,6 +361,39 @@ function deleteclick() {
 	for (var i = 0; i < checkbox5.length; i++) {
 		checkbox5[i].checked = false;
 	}
+	$("input[class='select_OS']").prop("checked", false);
+	$("input[class='input_OS']").prop("checked", false);
+	$(".search").val("")
+	$(".recordmode").val("recordmode_All")
+	$(".recordQ").val("recordQ_All")
+	selectEdit = "";
+	selectEdit2 = [];
+	selectOS = "";
+	selectOS2 = "";
+	search_file_name = "";
+	search_file_name2 = "";
+	search_model_name = "";
+	search_model_name2 = "";
+	search_model_number = "";
+	search_model_number2 = "";
+	select_recordmode = "";
+	select_recordmode2 = "";
+	select_recordQ = "";
+	select_recordQ2 = "";
+	record = "";
+	record2 = "";
+	select_Android = "";
+	select_Android2 = "";
+	select_Android3 = "";
+	select_Android4 = "";
+	select_iOS = "";
+	select_iOS2 = "";
+	selectmanufacturer = [];
+	selectmanufacturer2 = [];
+	resultarr = [];
+	resultarr_2 = [];
+	resultarr_3 = [];
+	resultarr_4 = [];
 	getFileListFromDB(initQueryForOriginal)
 	getFileListFromDB(initQueryForEdited)
 }

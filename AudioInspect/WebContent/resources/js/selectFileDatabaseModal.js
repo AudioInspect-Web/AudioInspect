@@ -56,7 +56,7 @@ function modal_view() {
                            <li class = "select-text">안드로이드 기반 소프트웨어</li>
                            <li class = "select-list"><input type="checkbox" class ="editlist2" name = "302 lock screen" id = 'sweditnonck' onclick = "manuclick()">302 lock screen</li>
                            <li class = "select-list"><input type="checkbox" class ="editlist2" name = "inshot inc." id = 'sweditnonck' onclick = "manuclick()">inshot inc.</li>
-                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Recorder & smart apps" id = 'sweditnonck' onclick = "manuclick()">Recorder & smart apps</li>
+                           <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Recorder & smart apps" id = 'sweditnonck' onclick = "manuclick()">recoder & smart apps</li>
                            <li class = "select-text">iOS 기반 소프트웨어</li>
                            <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Garageband" id = 'sweditnonck' onclick = "manuclick()">Garageband</li>
                            <li class = "select-list"><input type="checkbox" class ="editlist2" name = "Lexis Audio Editor" id = 'sweditnonck' onclick = "manuclick()">Lexis Audio Editor</li>
