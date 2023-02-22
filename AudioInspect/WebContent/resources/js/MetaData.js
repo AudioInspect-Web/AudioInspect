@@ -18,9 +18,13 @@ function StandMetaData(file) {
 		processData: false,
 		complete: function(data) {
 			dataList = data.responseText.replaceAll("[", "").replaceAll("]", "").split(",")
-			getStandMetaDataTreeFromXML(dataList[1])
+			xml = dataList[1].split("\n")
+			xml.splice(0,10)
+			getStandMetaDataTreeFromXML(xml)
 			//standardfilesData.metaData: fileManage.js에서 호출
-			standardfilesData.metaData.push(dataList[1])
+			standardfilesData.metaData.push(xml)
+			
+			
 		},
 		error: function(request, status, error) {
 			console.log(request.responseText);
@@ -50,10 +54,14 @@ function CompMetaData(file) {
 		processData: false,
 		complete: function(data) {
 			dataList = data.responseText.replaceAll("[", "").replaceAll("]", "").split(",")
-			getCompMetaDataTreeFromXML(dataList[0], dataList[1])
+			xml = dataList[1].split("\n")
+			xml.splice(0, 10)
+			getCompMetaDataTreeFromXML(dataList[0], xml)
 			//comparefilesData.metaData: fileManage.js에서 호출
 			var index = comparefilesData.fileName.indexOf(dataList[0])
-			comparefilesData.metaData[index]= dataList[1]
+			comparefilesData.metaData[index]= xml
+			
+			
 		},
 		error: function(request, status, error) {
 			console.log(request.responseText);
@@ -65,16 +73,38 @@ function CompMetaData(file) {
 	})
 }
 
-function MetaDataFromDB(selectedFileId) {
+function MetaDataFromDB(standOrCompare, selectedFileName, selectedFileId, selectedFileType) {
 	$.ajax({
 		method: "POST",
 		url: '/metaDataFromDBServlet; charset=utf-8',
 		dataType: 'text',
 		data: {
-			fileId: selectedFileId
+			fileId: selectedFileId,
+			fileType: selectedFileType
 		},
-		complete: function() {
-			console.log("성공")
+		complete: function(data) {
+			data = data.responseText
+			switch(standOrCompare){
+				case "standard":
+					xml = data.split("\n")
+					xml.splice(0, 4)
+					getStandMetaDataTreeFromXML(xml)
+					//standardfilesData.metaData: fileManage.js에서 호출
+					standardfilesData.metaData.push(xml)
+					break
+				case "compare":
+					xml = data.split("\n")
+					xml.splice(0, 4)
+					getCompMetaDataTreeFromXML(selectedFileName, xml)
+					//comparefilesData.metaData: fileManage.js에서 호출
+					var index = comparefilesData.fileName.indexOf(selectedFileName)
+					comparefilesData.metaData[index] = xml
+					
+					console.log("파일 이름 : " + selectedFileName)
+					console.log("index : " + index)
+					console.log("comparefilesData.fileName : " + comparefilesData.fileName[index])
+					break				
+			}
 		},
 		error: function(request, status, error) {
 			console.log(request.responseText);
@@ -87,15 +117,14 @@ function MetaDataFromDB(selectedFileId) {
 }
 
 function getStandMetaDataTreeFromXML(xml) {
-	var standardfile = document.getElementById('standardfile')
 	var comparemethod = document.querySelector(".compare_button.current").value
 	switch (comparemethod) {
 		case "XML":
+			var standardfile = ""
 			var result = ""
 			var block_info = []
 			var data_info = []
-			var xml = xml.split("\n")
-			for (var i = 10; i < xml.length; i++) {
+			for (var i = 0; i < xml.length; i++) {
 				if (xml[i].includes("block") == true) { //block값들
 					if (xml[i].includes("</block>") == true) {
 						standardfile = '</details>'
@@ -125,15 +154,13 @@ function getStandMetaDataTreeFromXML(xml) {
 
 function getCompMetaDataTreeFromXML(fileName, xml) {
 	var fileName = fileName.replaceAll(" ", "").replaceAll(".", "")
-	var comparefile = document.getElementById(fileName)
 	var comparemethod = document.querySelector(".compare_button.current").value
 	switch (comparemethod) {
 		case "XML":
 			var result = ""
 			var block_info = []
 			var data_info = []
-			var xml = xml.split("\n")
-			for (var i = 10; i < xml.length; i++) {
+			for (var i = 0; i < xml.length; i++) {
 				if (xml[i].includes("block") == true) { //block값들
 					if (xml[i].includes("</block>") == true) {
 						comparefile = '</details>'
@@ -148,14 +175,13 @@ function getCompMetaDataTreeFromXML(fileName, xml) {
 						result = result + comparefile
 					}
 				} else { //data값들
-					comparefile = '<tr><td id=compare' + i + ' style="border-left: 2px dashed black;">' + $(xml[i]).attr('name') + " :: " + $(xml[i]).text() + '</td></tr>'
+					comparefile = '<tr><td id=compare' + i + ' style="border-left: 2px dashed black; padding-left: 5px;">' + $(xml[i]).attr('name') + " :: " + $(xml[i]).text() + '</td></tr>'
 					data_info.push(block_info[block_info.length - 1] + "," + comparefile)
 				}
 			}
 			$("table#" + fileName).append(result)
 			for (var i = 0; i < data_info.length; i++) {
 				var data = data_info[i].split(",")
-				//console.log(data)
 				$("details#" + fileName + data[0]).append(data[1])
 			}
 			break

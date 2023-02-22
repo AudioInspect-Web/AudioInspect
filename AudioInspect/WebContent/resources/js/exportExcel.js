@@ -22,7 +22,6 @@ function exportReportToExcel_XML() {
 	var arr = [];
 	var summary = $("#summary")[0].innerText;
 	var total = $(".compareresult");
-	console.log(total)
 
 	var attribute_name = ""
 	var standardfile_value_2 = ""

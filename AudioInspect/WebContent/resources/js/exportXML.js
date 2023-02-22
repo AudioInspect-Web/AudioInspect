@@ -1,16 +1,20 @@
 function exportReportToXML() {
 	var comparemethod = document.querySelector(".compare_button.current").value;
 	let element = document.createElement('a');
-	//var standardfile = document.getElementById('standardfile')
 	var standardfile = standardfilesData.metaData[0]
-
 	if (comparemethod == "XML") {
-		var xml = standardfile.split("\n")
-		xml.splice(1, 8)
-		for (var i = 0; i < 3; i++) {
-			xml.pop()
+		var xml = '<?xml version="1.0" encoding="UTF-8"?>';
+		xml += "\n";
+		xml += "<Root>"
+		xml += "\n";
+		xml += "<MediaTrace>"
+		xml += "\n";
+		xml += '<media>';
+		xml += "\n";
+		for (var k = 0; k < standardfile.length; k++) {
+			xml += standardfile[k];
+			xml += "\n"
 		}
-		xml = xml.join().replaceAll(' <?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>').replaceAll(',', '\n')
 		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(xml));
 		element.setAttribute('download', 'audiofile.xml');
 		element.style.display = 'none';
@@ -40,7 +44,6 @@ function exportReportToXML() {
 				attribute_name_2 = attribute2.substr(attribute2.indexOf("]"));
 				attribute_name_2 = attribute_name_2.replace("]", "")
 				attribute_name_2 = attribute_name_2.replaceAll("<b>", "").replaceAll("</b>", "");
-				console.log(attribute_name_2)
 
 				var standardfile_value = $(".compareresult")[i].childNodes[2].data;
 				var comparefile_value = $(".compareresult")[i].lastChild.data;
@@ -78,7 +81,7 @@ function exportReportToXML() {
 					arr4[i - (arr.length + arr2.length + arr3.length)] = [attribute_name_1, attribute_name_2, standardfile_name, standardfile_value_2, comparefile_name, comparefile_value_2];
 				}
 			}
-			if (arr.length != 0) {
+			if (arr.length > 0) {
 				var blockMissing = "";
 				blockMissing = '   <BLOCK_MISSING>'
 				blockMissing += ("\n");
@@ -100,7 +103,7 @@ function exportReportToXML() {
 				blockMissing += ("\n");
 				xml3 += blockMissing;
 			}
-			if (arr2.length != 0) {
+			if (arr2.length > 0) {
 				var blockLocationMismatching = "";
 				blockLocationMismatching += '   <BLOCK_LOCATION_MISMATCHING>'
 				blockLocationMismatching += ("\n");
@@ -122,7 +125,7 @@ function exportReportToXML() {
 				blockLocationMismatching += ("\n");
 				xml3 += blockLocationMismatching;
 			}
-			if (arr3.length != 0) {
+			if (arr3.length > 0) {
 				var dataMissing = "";
 				dataMissing += '   <DATA_MISSING>'
 				dataMissing += ("\n");
@@ -144,7 +147,7 @@ function exportReportToXML() {
 				dataMissing += ("\n");
 				xml3 += dataMissing;
 			}
-			if (arr4.length != 0) {
+			if (arr4.length > 0) {
 				var dataValueMismatching = "";
 				dataValueMismatching += '   <DATA_VALUE_MISMATCHING>'
 				dataValueMismatching += ("\n");
@@ -166,8 +169,6 @@ function exportReportToXML() {
 				dataValueMismatching += ("\n");
 				xml3 += dataValueMismatching;
 			}
-
-			//xml3 += "\n";
 			xml3 += '</root>'
 			element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(xml3));
 			element.setAttribute('download', 'total_result.xml');
@@ -190,28 +191,20 @@ function exportReportToXML() {
 
 
 function exportReportXMlCompare(tab_id, standardfile, comparefile, comparefile_name) {
-	//var comparefile = document.getElementById(fileName)
-	//var comparefile = xml;
 	let xml2 = "";
 	var comparemethod = document.querySelector(".compare_button.current").value;
 	let element = document.createElement('a');
-
 	//XML인 경우
 	if (comparemethod == "XML") {
-		xml2 = comparefile.split("\n");
-		xml2.splice(1, 8)
-		for (var i = 0; i < 3; i++) {
-			xml2.pop()
-		}
-		/*for (var i = 0; i < xml2.length; i++) {
-		   if (xml2[i].includes("block") == true) {
-			  if ($(xml2[i]).attr("name") == "Second pass") {
-				 break
-			  }
-		   }
-  
-		}*/
-		xml2 = xml2.join().replaceAll(' <?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>').replaceAll(',', '\n');
+		xml2 = '<?xml version="1.0" encoding="UTF-8"?>';
+		xml2 += "\n";
+		xml2 += "<Root>"
+		xml2 += "\n";
+		xml2 += "<MediaTrace>"
+		xml2 += "\n";
+		xml2 += '<media>';
+		xml2 += "\n";
+		xml2 += comparefile;
 
 		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(xml2));
 		element.setAttribute('download', 'compareAudiofile.xml');

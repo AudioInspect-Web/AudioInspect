@@ -12,6 +12,8 @@ function standard_addFile(fileLocation, files) {
 	} else {
 		switch (fileLocation) {
 			case "DB":
+				standardfilesArr.push({ name: files[0].fileName })
+				standardfilesData.fileName.push(files[0].fileName)
 				$('.standard_name').append(files[0].fileName)
 				$('.standard_size').append(files[0].fileSize)
 				$('.standard_fileType').append(files[0].fileType)
@@ -133,8 +135,9 @@ function compare_addFile(fileLocation, files) {
 			var filename
 			switch (fileLocation) {
 				case "DB":
-					console.log(file)
 					if (compare_checkDuplicate(file.fileName)) {
+						comparefilesArr.push({ name: file.fileName })
+						comparefilesData.fileName.push(file.fileName)
 						$(".removetr").remove();
 						if (file.fileName == files[files.length - 1].fileName) {
 							var compare_infos = '<tr name = "trStaff" class = "trline" id = "trline">'
@@ -207,10 +210,6 @@ function compare_addFile(fileLocation, files) {
 					}
 					break
 			}
-			//탭메뉴 추가
-			//let compare_tabs = '';
-			//compare_tabs += '<li id="cpdelete" class="tab-link current";  data-tab="' + filename + '">' + file.name + '<button id = "buttonhover" class="buttonhover" name = "tabdelete">X</button></li>';
-			//$('.compare_tabs').append(compare_tabs);
 			//파일 별로 mediainfo 결과창 추가
 			let compare_context = '';
 			compare_context += '<table id="' + filename + '" class="comparefile current"></table>';
@@ -279,14 +278,14 @@ function compare_addFile(fileLocation, files) {
 					//탭메뉴의 파일명을 text로 불러와서 삭제버튼인 X도 같이 출력되어 filelist에도 X를 붙이고 같은지 확인
 					cell += "X"
 					if (compare_tabs == cell) {
-						for (var i = 0; i < 4; i++) {
+						for (var i = 0; i < 5; i++) {
 							var currenttab = filelist_filename[r].cells[i]
 							currenttab.style.backgroundColor = "lightgrey"
 							currenttab.style.fontWeight = "bold"
 						}
 					}
 					else {
-						for (var i = 0; i < 4; i++) {
+						for (var i = 0; i < 5; i++) {
 							var currenttab = filelist_filename[r].cells[i]
 							currenttab.style.backgroundColor = "white"
 							currenttab.style.fontWeight = "normal"

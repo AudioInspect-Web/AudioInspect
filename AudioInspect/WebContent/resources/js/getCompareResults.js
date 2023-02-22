@@ -11,9 +11,9 @@ $(document).ready(function() {
 			if (tab_id != "compare_basic") {
 				switch (comparemethod) {
 					case "XML":
-						var standardfile = standardfilesData.metaData[0]
+						var standardfile = standardfilesData.metaData[0].join("\n")
 						var index = comparefilesData.fileName.indexOf(comparefile_name)
-						var comparefile = comparefilesData.metaData[index]
+						var comparefile = comparefilesData.metaData[index].join("\n")
 						compareXML(tab_id, standardfile, comparefile, comparefile_name)
 						break
 					default:
@@ -329,16 +329,16 @@ function compareXML(tab_id, standardfile, comparefile, comparefile_name) {
 	//getStandMetaDataTreeFromXML(), getCompMetaDataTreeFromXML(): MetaData.js에서 호출
 	$('#standardfile').empty()
 	$('#' + tab_id).empty()
-	getStandMetaDataTreeFromXML(standardfile)
-	getCompMetaDataTreeFromXML(comparefile_name, comparefile)
+	getStandMetaDataTreeFromXML(standardfile.split("\n"))
+	getCompMetaDataTreeFromXML(comparefile_name, comparefile.split("\n"))
 
 	//비교 상세 결과 초기화
 	$(".resultline").empty()
 	$(".resultline_2").empty()
 	$(".line").empty()
-
+	
 	//standardfile의 Block, Data 분석
-	for (var i = 10; i < standardfileArr.length; i++) { //MediaInfoLib에 대한 정보는 제외하기 위해 index 10부터 시작
+	for (var i = 0; i < standardfileArr.length; i++) {
 		if (standardfileArr[i].includes("block") == true) { //Block
 			if ($(standardfileArr[i]).attr("name") == "Second pass") {
 				break
@@ -382,12 +382,17 @@ function compareXML(tab_id, standardfile, comparefile, comparefile_name) {
 			}
 		} else { //Data
 			var depth = block_info_for_count_depth_standardfile.length - 1
-			data_info_standardfile["depth" + depth].push(i + $(standardfileArr[i]).attr("name") + "=" + $(standardfileArr[i]).text())
+			switch(depth){
+				case -1:
+					break
+				default:
+					data_info_standardfile["depth" + depth].push(i + $(standardfileArr[i]).attr("name") + "=" + $(standardfileArr[i]).text())
+			}
 		}
 	}
 
 	//comparefile의 Block, Data 분석
-	for (var i = 10; i < comparefileArr.length; i++) { //MediaInfoLib에 대한 정보는 제외하기 위해 index 10부터 시작
+	for (var i = 0; i < comparefileArr.length; i++) {
 		if (comparefileArr[i].includes("block") == true) { //Block
 			if ($(comparefileArr[i]).attr("name") == "Second pass") {
 				break
@@ -431,7 +436,12 @@ function compareXML(tab_id, standardfile, comparefile, comparefile_name) {
 			}
 		} else { //Data
 			var depth = block_info_for_count_depth_comparefile.length - 1
-			data_info_comparefile["depth" + depth].push(i + $(comparefileArr[i]).attr("name") + "=" + $(comparefileArr[i]).text())
+			switch (depth) {
+				case -1:
+					break
+				default:
+					data_info_comparefile["depth" + depth].push(i + $(comparefileArr[i]).attr("name") + "=" + $(comparefileArr[i]).text())
+			}
 		}
 	}
 
